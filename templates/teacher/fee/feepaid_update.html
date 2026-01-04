@@ -1,0 +1,67 @@
+{% extends 'teacher/teacherbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+    ol.breadcrumb li+li:before {
+        content: '\f061';
+        display: inline-block;
+        font-family: 'fontAwesome';
+        padding: 0 10px;
+    }
+</style>
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'user-dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'exam_create' %}">Create Exam</a></li>
+            <li><a href="{% url 'exam_list' %}">Exam List</a></li>
+            <li aria-current="page">Updating Exam</li>
+        </ol>
+    </nav>
+</div>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Update Exam</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <div class="row">
+                            <div class="mb-6 col-md-6">
+                                <label class="form-label" for="grade">Grade</label>
+                                <select class="form-control" id="grade" name="grade" required>
+                                    {% for t in grades %}
+                                    <option value="{{ t.id }}"
+                                        {% if exam and exam.grade_id == t.id %}selected{% endif %}>{{ t.grade_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-6 col-md-6">
+                                <label class="col-form-label" for="exam_name">Exam Name</label>
+                                <input type="text" class="form-control" name="exam_name" id="exam_name"
+                                    placeholder="Enter Exam Name" value="{{ exam.exam_name }}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-6 col-md-6">
+                                <label class="col-form-label" for="description">Description</label>
+                                <input type="text" class="form-control" name="description" id="description"
+                                    placeholder="Enter description" value="{{ exam.description }}" required>
+                            </div>
+                        </div>
+                        {% if exam %}
+                        <input type="hidden" name="exam_id" value="{{ exam.id }}">
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

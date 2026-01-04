@@ -1,0 +1,129 @@
+{% extends 'teacher/teacherbase.html' %}
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+  display: inline-block;
+  font-family: 'fontAwesome';
+  padding: 0 10px;
+  }
+</style>
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'user-dashboard' %}">Dashboard</a>
+            </li>
+            <li><a href="{% url 'feepaid_create' %}">New Paid Fee</a></li>
+            <li aria-current="page">Student Fee Report</li>
+        </ol>
+    </nav>
+</div>
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+<div class="card-header border-0 flex-wrap pb-0">
+    <form method="POST" class="form-inline">
+        <div class="input-group">
+            <!-- Grade Dropdown -->
+            <select name="grade" class="form-control">
+                <option value="">All Grades</option>
+                {% for grade in grades %}
+                <option value="{{ grade.id }}" {% if grade.id == search_grade %}selected{% endif %}>
+                    {{ grade.grade_name }}
+                </option>
+                {% endfor %}
+            </select>
+            <!-- Division Dropdown -->
+            <select name="division" class="form-control">
+                <option value="">All Divisions</option>
+                {% for division in divisions %}
+                <option value="{{ division.id }}" {% if division.id == search_division %}selected{% endif %}>
+                    {{ division }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary btn-spacing">Search</button>
+        </div>
+    </form>
+</div>
+{% if report_data %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Student Fee Report For Grade : {{grade_name}} - Division : {{division_name}}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Student Name</th>
+                                        <th>Total Fee</th>
+                                        <th>Total Paid Fee</th>
+                                        <th>Balance Fee</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in report_data %}
+                                        <tr>
+                                            <td>{{ item.student_name }}</td>
+                                            <td>{{ item.total_fee }}</td>
+                                            <td>{{ item.total_paid_fee }}</td>
+                                            <td>{{ item.balance_fee }}</td>
+                                            <td><a class="btn btn-primary btn-xs" href="{% url 'fee-report-details' item.student_id  %}"><span
+                                                class="	far fa-eye"></span></a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock content %}

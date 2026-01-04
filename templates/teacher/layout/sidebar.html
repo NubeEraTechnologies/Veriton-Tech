@@ -1,0 +1,142 @@
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+<div class="dlabnav">
+    <div class="dlabnav-scroll">
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'user-dashboard' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'teacher-attendance-report-monthwise' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Self Attendance</span>
+                </a>
+            </li>
+   
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Students</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'student-list' %}">Student List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'student-list-pending' %}">Pending Student List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'student-attendance' %}">Student Attendance</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'attendance-report-daywise' %}">Student Attendance Day wise</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'attendance-report-monthwise' %}">Student Attendance Month wise</a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="{% url 'create-student' %}">Create Student</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'upload-student-csv' %}">Upload Student CSV</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Exams</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'exam_list' %}">Exams List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'exam_create' %}">Create Exams</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'examquestion_list' %}">Exam Questions List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'examquestion_create' %}">Create Exam Questions</a>
+                    </li>
+                    
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Scheduler Status</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'schedulerstatus_list' %}">Scheduler Status List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'schedulerstatus_create' %}">Create Scheduler</a>
+                    </li>                 
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Fee Management</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'fee-setting' %}">Fee Setting</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'feepaid_list' %}">Fee Paid List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'fee-report' %}">Student Fee Report</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'feepaid_create' %}">Create Fee Paid</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'teacher-calender' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Calender</span>
+                </a>
+            </li>
+          
+            <li>
+                <a href="{% url 'user-profile' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Update Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'user-password' %}" class="" aria-expanded="false">
+                    <i class="fa fa-key"></i>
+                    <span class="nav-text">Change Password</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="" aria-expanded="false">
+                    <i class="fa fa-sign-out"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--**********************************
+            Sidebar end
+        ***********************************-->

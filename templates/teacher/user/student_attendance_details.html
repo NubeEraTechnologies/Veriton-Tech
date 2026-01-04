@@ -1,0 +1,53 @@
+{% extends 'teacher/teacherbase.html' %}
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Details Report</title>
+
+    <style>
+        .btn-spacing {
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<div class="card students-list">
+    <div class="card-header border-0 flex-wrap pb-0">
+        <h1>Attendance for Class : {{ grade_name }} ({{ division_name }}) on {{ attendance_date }}</h1>
+    </div>
+
+    {% if students_data %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll Number</th>
+                    <th>Attendance Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students_data %}
+                    <tr>
+                        <td >{{ student.user_full_name }}</td>
+                        <td>{{ student.roll_no }}</td>
+                        <td>{{ student.attendance_status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,98 @@
+{% extends 'teacher/teacherbase.html' %} {% load widget_tweaks %}
+{% block content %}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  .modal-content {
+    text-align: center;
+    /* Center text inside the modal */
+  }
+   /* Optional custom styling for progress bars */
+   .progress-bar {
+            text-align: center;
+            font-weight: bold;
+        }
+        .progress-container {
+            margin-bottom: 20px;
+        }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="schedulerChart" width="800" height="400"></canvas>
+
+    <script>
+        const chartData = {{ chart_data|safe }};
+
+        const labels = chartData.scheduler_labels;
+
+        const schedulerData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Scheduler Start-End Dates',
+                    data: chartData.scheduler_start_end.map((item, index) => ({
+                        x: labels[index],
+                        y: item.start,
+                        y2: item.end
+                    })),
+                    backgroundColor: 'rgba(75, 192, 192, 0.4)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Scheduler Status Dates',
+                    data: chartData.status_dates.map((date, index) => ({
+                        x: chartData.status_labels[index],
+                        y: date
+                    })),
+                    backgroundColor: 'rgba(153, 102, 255, 0.4)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const config = {
+            type: 'scatter',
+            data: schedulerData,
+            options: {
+                scales: {
+                    y: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Lesson Heading'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                if (context.dataset.label === 'Scheduler Start-End Dates') {
+                                    return `Start: ${context.raw.y}, End: ${context.raw.y2}`;
+                                } else {
+                                    return `Date: ${context.raw.y}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const schedulerChart = new Chart(
+            document.getElementById('schedulerChart'),
+            config
+        );
+    </script>
+    {% endblock content %}

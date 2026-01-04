@@ -1,0 +1,90 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+  display: inline-block;
+  font-family: 'fontAwesome';
+  padding: 0 10px;
+  }
+  </style>
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li><a href="{% url 'user-dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'module_create' %}">Create Module</a></li>
+        <li><a href="{% url 'module_list' %}">Module List</a></li>
+      <li aria-current="page">Updating Module</li>
+    </ol>
+  </nav>
+</div>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Update Module</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <div class="row">
+                            <div class="mb-6 col-md-6">
+                                <label class="form-label" for="grade">Grade</label>
+                                <select class="form-control" id="grade" name="grade" required>
+                                    {% for t in grades %}
+                                    <option value="{{ t.id }}" {% if module and module.grade_id == t.id %}selected{% endif %}>{{ t.grade_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-6 col-md-6">
+                                <label class="col-form-label" for="module_name">Module Name</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="module_name"
+                                    id="module_name"
+                                    placeholder="Enter Module Name"
+                                    value="{{ module.module_name }}"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-6 col-md-6">
+                                <label class="col-form-label" for="description">Description</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="description"
+                                    id="description"
+                                    placeholder="Enter description"
+                                    value="{{ module.description }}"
+                                    required
+                                >
+                            </div>
+                            <div class="mb-6 col-md-6">
+                                <label class="form-control-label" for="module_pic">Module Picture</label>
+                                <input
+                                    type="file"
+                                    id="module_pic"
+                                    name="module_pic"
+                                    class="form-control"
+                                    accept=".jpg, .jpeg, .png, .gif"
+                                    {% if module %}placeholder="Optional"{% endif %}
+                                >
+                            </div>
+                        </div>
+                        {% if module %}
+                        <input type="hidden" name="module_id" value="{{ module.id }}">
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,124 @@
+{% extends 'teacher/teacherbase.html' %}
+
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Month wise Attendance Report</title>
+
+    <!-- Include Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        .btn-spacing {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+<div class="card students-list">
+    <div class="card-header border-0 flex-wrap pb-0">
+        <h4>Attendance Report</h4>
+
+        <form method="POST" action="{% url 'attendance-report-monthwise' %}" class="form-inline">
+            {% csrf_token %}
+            <!-- Date Picker -->
+            <input type="text" class="form-control" name="date" id="date" placeholder="Select Date"
+            value="{{ search_date }}">
+            <div class="input-group">
+                <!-- Month Picker (Only Month and Year) -->
+                <input type="month" class="form-control" name="date" id="date" placeholder="Select Month"
+                    value="{{ search_date|date:'Y-m' }}" required>
+
+                <!-- Grade Dropdown -->
+                <select name="grade" class="form-control" required>
+                    <option value="">All Grades</option>
+                    {% for grade in grades %}
+                    <option value="{{ grade.id }}" {% if grade.id == search_grade %}selected{% endif %}>
+                        {{ grade }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <!-- Division Dropdown -->
+                <select name="division" class="form-control" required>
+                    <option value="">All Divisions</option>
+                    {% for division in divisions %}
+                    <option value="{{ division.id }}" {% if division.id == search_division %}selected{% endif %}>
+                        {{ division }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="btn btn-primary btn-spacing">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if report %}
+<div class="card">
+    <div class="card-body">
+        <div class="heading-layout1">
+            <div class="item-title">
+                <h3>Attendance Sheet of Class {{search_grade_name}}: Division {{search_division_name}},
+                    {{ search_date }}</h3>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table bs-table table-striped table-bordered text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Students</th>
+                            {% for day in current_month_days %}
+                            <th>{{ day.day }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student, attendance in report.items %}
+                        <tr>
+                            <td class="text-left">{{ student.first_name }} {{ student.last_name }} </td>
+                            {% for day in current_month_days %}
+                            <td>
+                                {% with attendance|get_item:day as status %}
+                                {% if status == 'Y' %}
+                                <i class="fas fa-check text-success"></i>
+                                {% elif status == 'N' %}
+                                <i class="fas fa-times text-danger"></i>
+                                {% else %}
+                                <span>-</span>
+                                {% endif %}
+                                {% endwith %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Include Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    flatpickr("#date", {
+        plugins: [new monthSelectPlugin({ shorthand: true, dateFormat: "F Y", altFormat: "F Y", theme: "light" })],
+        enableTime: false,
+        dateFormat: "Y-m", // Format as year-month
+        allowInput: false, // Disable text input, only allow date selection
+        defaultDate: "today", // Default to today's date
+        locale: {
+            firstDayOfWeek: 1 // Start the calendar on Monday (optional)
+        }
+    });
+</script>
+{% endblock content %}

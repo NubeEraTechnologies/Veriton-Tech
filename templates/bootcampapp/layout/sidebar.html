@@ -1,0 +1,38 @@
+<div class="dlabnav">
+    <div class="dlabnav-scroll">
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'user-dashboard' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            
+
+            <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                <i class="bi bi-people  "></i>
+                <span class="nav-text">Users</span>
+            </a>
+            <ul aria-expanded="false">
+                <li><a href="{% url 'admin-view-user-list' %}">User List</a></li>
+                <li><a href="{% url 'admin-view-user-list-school' %}">School wise Student List</a></li>
+                <li><a href="{% url 'create-principle' %}">Create Principle</a></li>
+                <li><a href="{% url 'create-staff' %}">Create staff</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{% url 'user-password' %}" class="" aria-expanded="false">
+                <i class="fa fa-key"></i>
+                <span class="nav-text">Change Password</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}" class="" aria-expanded="false">
+                <i class="fa fa-sign-out"></i>
+                <span class="nav-text">Logout</span>
+            </a>
+        </li>
+        </ul>
+    </div>
+</div>

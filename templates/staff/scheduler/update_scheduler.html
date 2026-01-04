@@ -1,0 +1,210 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="/static/get/css/style.css">
+
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+    display: inline-block;
+    font-family: 'fontAwesome';
+    padding: 0 10px;
+  }
+</style>
+
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li><a href="{% url 'user-dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'scheduler_list' %}">Scheduler List</a></li>
+        <li aria-current="page">Update Scheduler</li>
+    </ol>
+  </nav>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Update Scheduler</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">School</label>
+                            <div class="col-sm-9">
+                                <select name="school" id="school" class="form-control" onchange="fetchTeachers()" required>
+                                    <option value="">Select School</option>
+                                    {% for school in schools %}
+                                        <option value="{{ school.id }}" {% if school.id == scheduler.school.id %} selected {% endif %}>{{ school.school_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Teacher</label>
+                            <div class="col-sm-9">
+                                <select name="teacher" id="teacher" class="form-control" onchange="fetchGrades()" required>
+                                    <option value="">Select Teacher</option>
+                                    {% for teacher in teachers %}
+                                        <option value="{{ teacher.id }}" {% if teacher.id == scheduler.teacher.id %} selected {% endif %}>{{ teacher.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Grade</label>
+                            <div class="col-sm-9">
+                                <select name="grade" id="grade" class="form-control" onchange="fetchDivisions()" required>
+                                    <option value="">Select Grade</option>
+                                    {% for grade in grades %}
+                                        <option value="{{ grade.id }}" {% if grade.id == scheduler.grade.id %} selected {% endif %}>{{ grade.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Division</label>
+                            <div class="col-sm-9">
+                                <select name="division" id="division" class="form-control" required>
+                                    <option value="">Select Division</option>
+                                    {% for division in divisions %}
+                                        <option value="{{ division.id }}" {% if division.id == scheduler.division.id %} selected {% endif %}>{{ division.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Title</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="title" class="form-control" placeholder="Enter Title" value="{{ scheduler.title }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Start Date</label>
+                            <div class="col-sm-9">
+                                <input type="datetime-local" class="form-control" name="start" value="{{ scheduler.start|date:'Y-m-d\TH:i' }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">End Date</label>
+                            <div class="col-sm-9">
+                                <input type="datetime-local" class="form-control" name="end" value="{{ scheduler.end|date:'Y-m-d\TH:i' }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">All Day</label>
+                            <div class="col-sm-9">
+                                <input type="checkbox" name="all_day" {% if scheduler.all_day %} checked {% endif %}>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">Update Scheduler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function fetchTeachers() {
+        var schoolId = document.getElementById('school').value;
+        if (schoolId) {
+            fetch("{% url 'get_teachers' school_id=0 %}".replace('0', schoolId))
+                .then(response => response.json())
+                .then(data => {
+                    let teacherSelect = document.getElementById('teacher');
+                    teacherSelect.innerHTML = "<option value=''>Select Teacher</option>";
+                    data.forEach(teacher => {
+                        teacherSelect.innerHTML += `<option value="${teacher.id}">${teacher.name}</option>`;
+                    });
+                });
+        }
+    }
+
+    function fetchGrades() {
+        var teacherId = document.getElementById('teacher').value;
+        if (teacherId) {
+            fetch("{% url 'get_grades' teacher_id=0 %}".replace('0', teacherId))
+                .then(response => response.json())
+                .then(data => {
+                    let gradeSelect = document.getElementById('grade');
+                    gradeSelect.innerHTML = "<option value=''>Select Grade</option>";
+                    data.forEach(grade => {
+                        gradeSelect.innerHTML += `<option value="${grade.id}">${grade.name}</option>`;
+                    });
+                });
+        }
+    }
+
+    function fetchDivisions() {
+        var gradeId = document.getElementById('grade').value;
+        if (gradeId) {
+            fetch("{% url 'get_divisions' grade_id=0 %}".replace('0', gradeId))
+                .then(response => response.json())
+                .then(data => {
+                    let divisionSelect = document.getElementById('division');
+                    divisionSelect.innerHTML = "<option value=''>Select Division</option>";
+                    data.forEach(division => {
+                        divisionSelect.innerHTML += `<option value="${division.id}">${division.name}</option>`;
+                    });
+                });
+        }
+    }
+</script>
+
+{% endblock %}

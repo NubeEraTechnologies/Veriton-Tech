@@ -1,0 +1,191 @@
+{% extends 'bootcampapp/adminbase.html' %}
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div id="alert-container" class="mt-3"></div>
+
+<div class="col-md-6 login-wrap-bg">
+    <h1>Sign up</h1>
+    <form id="signup-form" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <!-- First Row: First Name and Last Name -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        class="form-control"
+                        placeholder="Enter your First Name"
+                        required
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Last Name</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        class="form-control"
+                        placeholder="Enter your Last Name"
+                        required
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Second Row: User Name and Password -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">User Name</label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        class="form-control"
+                        placeholder="Choose your user name"
+                        required
+                    >
+                    <span id="username-status"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Password</label>
+                    <div class="pass-group" id="passwordInput">
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            class="form-control pass-input"
+                            placeholder="Enter your password"
+                            required
+                        >
+                        <span class="toggle-password feather-eye"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Third Row: Mobile and WhatsApp -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Mobile</label>
+                    <input
+                        type="text"
+                        id="mobile"
+                        name="mobile"
+                        class="form-control"
+                        placeholder="Enter your Mobile"
+                        required
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Whats'App</label>
+                    <div class="pass-group" id="passwordInput">
+                        <input
+                            id="whatsappno"
+                            name="whatsappno"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter your Whats'App"
+                            required
+                        >
+                        <span class="toggle-password feather-eye"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label">Profile Picture</label>
+            <input
+                type="file"
+                id="profile_pic"
+                name="profile_pic"
+                class="form-control"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label">Banner Picture</label>
+            <input
+                type="file"
+                id="banner_pic"
+                name="banner_pic"
+                class="form-control"
+                required
+            >
+        </div>
+
+
+        <div class="d-grid">
+            <button class="btn btn-primary btn-start" type="submit">Create Account</button>
+        </div>
+    </form>
+</div>
+
+    <script>
+        $(document).ready(function() {
+        var isUsernameTaken = false;
+        $('#username').on('input', function() {
+            var username = $(this).val();
+            if (username) {
+                $.ajax({
+                    url: '/check-username/',
+                    data: {
+                        'username': username
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.is_taken) {
+                            $('#username-status').text('Username is already taken.').css('color', 'red');
+                            isUsernameTaken = true;
+                        } else {
+                            $('#username-status').text('Username is available.').css('color', 'green');
+                            isUsernameTaken = false;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: " + status + " - " + error);
+                    }
+                });
+            } else {
+                $('#username-status').text('');
+                isUsernameTaken = false;
+            }
+        });
+
+        $('#signup-form').on('submit', function(event) {
+            if (isUsernameTaken) {
+                event.preventDefault();
+                showAlert("Please choose a different username.");
+            }
+        });
+        function showAlert(message) {
+            var alertHtml = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            `;
+            $('#alert-container').html(alertHtml);
+            // Auto close the alert after 3 seconds
+            setTimeout(function() {
+                $('.alert').alert('close');
+            }, 3000);
+        }
+    });
+    </script>
+{% endblock content %}

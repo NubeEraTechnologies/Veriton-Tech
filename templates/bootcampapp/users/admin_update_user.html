@@ -1,0 +1,154 @@
+{% extends 'bootcampapp/adminbase.html' %}
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+<div class="col-md-6 login-wrap-bg">
+    <h1>User Name: {{ users.username }} </h1>
+    <form id="signup-form" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <!-- First Row: First Name and Last Name -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        class="form-control"
+                        placeholder="Enter your First Name"
+                        required
+                        value='{{ users.first_name }}'
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Last Name</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        class="form-control"
+                        placeholder="Enter your Last Name"
+                        required
+                        value='{{ users.last_name }}'
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Third Row: Mobile and WhatsApp -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Mobile</label>
+                    <input
+                        type="text"
+                        id="mobile"
+                        name="mobile"
+                        class="form-control"
+                        placeholder="Enter your Mobile"
+                        required
+                        value='{{ users.mobile }}'
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Whats'App</label>
+                    <div class="pass-group" id="passwordInput">
+                        <input
+                            id="whatsappno"
+                            name="whatsappno"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter your Whats'App"
+                            required
+                            value='{{ users.whatsappno }}'
+                        >
+                        <span class="toggle-password feather-eye"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label">Profile Picture</label>
+    
+          <!-- Display current profile picture if it exists -->
+          {% if users.profile_pic %}
+              <div>
+                  <img src="{{ users.profile_pic.url }}" alt="Current Profile Picture" style="max-width: 150px; max-height: 150px; margin-bottom: 10px;">
+              </div>
+          {% endif %}
+          
+          <input
+              type="file"
+              id="profile_pic"
+              name="profile_pic"
+              class="form-control"
+          >
+        </div>
+        <div class="form-group">
+          <label class="form-control-label">Banner Picture</label>
+    
+          <!-- Display current profile picture if it exists -->
+          {% if users.banner_pic %}
+              <div>
+                  <img src="{{ users.banner_pic.url }}" alt="Current Banner Picture" style="max-width: 150px; max-height: 150px; margin-bottom: 10px;">
+              </div>
+          {% endif %}
+          
+          <input
+              type="file"
+              id="banner_pic"
+              name="banner_pic"
+              class="form-control"
+          >
+        </div>
+        
+
+        <div class="d-grid">
+            <button class="btn btn-primary btn-start" type="submit">Update Account</button>
+        </div>
+    </form>
+   
+</div>
+
+<script>
+    $(document).ready(function(){
+        var isUsernameTaken = false;
+
+        $('#username').on('input', function() {
+            var username = $(this).val();
+            if (username) {
+                $.ajax({
+                    url: '/check-username/',
+                    data: {
+                        'username': username
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.is_taken) {
+                            $('#username-status').text('Username is already taken.').css('color', 'red');
+                            isUsernameTaken = true;
+                        } else {
+                            $('#username-status').text('Username is available.').css('color', 'green');
+                            isUsernameTaken = false;
+                        }
+                    }
+                });
+            } else {
+                $('#username-status').text('');
+                isUsernameTaken = false;
+            }
+        });
+
+        $('#signup-form').on('submit', function(event) {
+            if (isUsernameTaken) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock content %}

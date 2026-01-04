@@ -1,0 +1,140 @@
+{% extends 'teacher/teacherbase.html' %}
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Report</title>
+
+    <!-- Include Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        .btn-spacing {
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+
+        /* Ensure the progress bar fits the height of the table cell */
+        td .progress {
+            height: 30px;
+            /* Adjust this value as needed to fit the cell height */
+        }
+
+        td .progress-bar {
+            height: 100%;
+            /* Ensure the progress bar fills the entire height of the progress div */
+            line-height: 30px;
+            /* Vertically center the text inside the bar */
+            color: #fff;
+            /* White text color */
+            text-align: center;
+            /* Center the text inside the bar */
+            font-weight: bold;
+            /* Make the text bold */
+        }
+    </style>
+</head>
+
+<div class="card students-list">
+
+    <div class="card-header border-0 flex-wrap pb-0">
+        <h4>Day Wise Attendance Report</h4>
+
+        <form method="GET" action="{% url 'attendance-report-daywise' %}" class="form-inline">
+            <div class="input-group">
+                <!-- Date Picker -->
+                <input type="text" class="form-control" name="date" id="date" placeholder="Select Date"
+                    value="{{ search_date }}">
+                <!-- Grade Dropdown -->
+                <select name="grade" class="form-control">
+                    <option value="">All Grades</option>
+                    {% for grade in grades %}
+                    <option value="{{ grade.id }}" {% if grade.id == search_grade %}selected{% endif %}>
+                        {{ grade }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <!-- Division Dropdown -->
+                <select name="division" class="form-control">
+                    <option value="">All Divisions</option>
+                    {% for division in divisions %}
+                    <option value="{{ division.id }}" {% if division.id == search_division %}selected{% endif %}>
+                        {{ division }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary btn-spacing">Search</button>
+            </div>
+        </form>
+    </div>
+
+    {% if report %}
+    <div class="table-responsive">
+        <table class="table display mb-4">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Grade</th>
+                    <th>Division</th>
+                    <th>Total Students</th>
+                    <th>Total Present</th>
+                    <th>Total Absent</th>
+                    <th>Percentage</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in report %}
+                {% if search_date %}
+                <tr>
+                    <td>{{ search_date }}</td>
+                    <td>{{ entry.Grade  }}</td>
+                    <td>{{ entry.Division }}</td>
+                    <td>{{ entry.total_students }}</td>
+                    <td>{{ entry.total_present }}</td>
+                    <td>{{ entry.total_absent }}</td>
+                    <td>
+                        {% if entry.attendance_percentage > 0 %}
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" style='width: {{ entry.attendance_percentage }}%;'
+                                role="progressbar">
+                                {{ entry.attendance_percentage }}%
+                            </div>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td><a class="btn btn-info btn-xs" href="{% url 'attendance_details' entry.Grade.id entry.Division.id search_date %}"><span
+                        class="	far fa-eye"></span></a></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+</div>
+
+<!-- Include Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // Initialize Flatpickr for the date input with format dd-mm-yyyy
+    flatpickr("#date", {
+        dateFormat: "d-m-Y", // Format date as dd-mm-yyyy
+        allowInput: false, // Disable text input, only allow date selection
+        defaultDate: "today", // Default to today's date
+        locale: {
+            firstDayOfWeek: 1 // Start the calendar on Monday (optional)
+        }
+    });
+</script>
+
+{% endblock content %}

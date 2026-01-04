@@ -1,0 +1,85 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+  display: inline-block;
+  font-family: 'fontAwesome';
+  padding: 0 10px;
+  }
+  </style>
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li><a href="{% url 'user-dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'division_create' %}">New Division</a></li>
+      <li aria-current="page">View Divisions</li>
+    </ol>
+  </nav>
+</div>
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Division Name</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for division in divisions %}
+        <tr>
+          <td> {{division.division_name}}</td>
+          <td><a class="btn btn-primary btn-xs" href="{% url 'division_update' division.id %}"><span
+                class="	far fa-edit"></span></a></td>
+          <td><a class="btn btn-danger btn-xs" href="{% url 'division_delete' division.id %}"
+              onclick="return confirm('Are you sure?')"><span class="far fa-trash-alt"></span></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+    {% endblock content %}

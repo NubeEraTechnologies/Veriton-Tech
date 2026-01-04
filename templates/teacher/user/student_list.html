@@ -1,0 +1,204 @@
+{% extends 'teacher/teacherbase.html' %}
+{% block content %}
+{% load static %}
+{% load bootcamp_filters %}
+<style>
+    .btn-spacing {
+        margin-bottom: 10px; /* Adjust as needed */
+    }
+    .pagination {
+        margin-top: 20px;
+    }
+    /* Ensure the progress bar fits the height of the table cell */
+td .progress {
+    height: 30px; /* Adjust this value as needed to fit the cell height */
+}
+
+td .progress-bar {
+    height: 100%;  /* Ensure the progress bar fills the entire height of the progress div */
+    line-height: 30px; /* Vertically center the text inside the bar */
+    color: #fff;  /* White text color */
+    text-align: center;  /* Center the text inside the bar */
+    font-weight: bold;  /* Make the text bold */
+}
+</style>
+    <div class="row mb-3">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="row">
+        <div id="message" class="alert" style="display: none;"></div>
+    </div>
+    <div class="card students-list">
+        <div class="card-header border-0 flex-wrap pb-0">
+            <h4>Student List</h4>
+            <div class="input-group search-area w-auto">
+                <form method="GET" action="{% url 'student-list' %}" class="form-inline">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <a href="javascript:void(0)">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 32 32"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path d="M27.414 24.586L22.337 19.509C23.386 17.928 24 16.035 24 14C24 8.486 19.514 4 14 4C8.486 4 4 8.486 4 14C4 19.514 8.486 24 14 24C16.035 24 17.928 23.386 19.509 22.337L24.586 27.414C25.366 28.195 26.634 28.195 27.414 27.414C28.195 26.633 28.195 25.367 27.414 24.586ZM7 14C7 10.14 10.14 7 14 7C17.86 7 21 10.14 21 14C21 17.86 17.86 21 14 21C10.14 21 7 17.86 7 14Z" fill="var(--primary)"></path>
+                                </svg>
+                            </a>
+                        </span>
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Search users..."
+                            value="{{ query }}"
+                        >
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body py-0">
+            <div class="table-responsive">
+                <div id="application-tbl1_wrapper" class="dataTables_wrapper no-footer">
+                    <table
+                        class="table display mb-4 dataTablesCard order-table card-table text-black application dataTable no-footer"
+                        id="application-tbl1"
+                        role="grid"
+                        aria-describedby="application-tbl1_info"
+                    >
+                        <thead>
+                            <tr role="row">
+                                <th
+                                    class="sorting_asc"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending"
+                                    style="width: 274.859px;"
+                                >Name</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >User Name</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Grade</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Division</th>
+
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Progress</th>
+                        </thead>
+                        <tbody>
+                            {% for t in users %}
+                            <tr role="row" class="odd">
+                                <td class="sorting_1">
+                                    <div class="d-flex align-items-center">
+                                        {% if t.profile_pic %}
+                                        <img src="{{ t.profile_pic.url }}" alt="">
+                                        {% else %}
+                                        <img src="{% static 'image/no_image.jpg' %}" alt="Default Profile Picture">
+                                        {% endif %}
+                                        <h4 class="mb-0 fs-16 font-w500">{{t.first_name}} {{t.last_name}}</h4>
+                                    </div>
+                                </td>
+                                <td>{{t.username}}</td>
+                                <td>{{t.grade.grade_name}}</td>
+                                <td>{{t.division.division_name}}</td>
+                                <td>
+                                    <!-- Progress bar showing the watched percentage -->
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" 
+                                             style="width: {{ t.watched_percentage }}%;" 
+                                             role="progressbar">
+                                            <!-- Percentage text shown inside the progress bar -->
+                                            {{ t.watched_percentage }}%
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- Pagination Controls -->
+                    <!-- Pagination Controls -->
+                    <nav>
+                        <ul class="pagination pagination-gutter">
+                            {% if users.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if query %}&search={{ query }}{% endif %}" aria-label="First">
+                                    <i class="la la-angle-double-left"></i>
+                                    <!-- Use a double arrow for the first page -->
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ users.previous_page_number }}{% if query %}&search={{ query }}{% endif %}" aria-label="Previous">
+                                    <i class="la la-angle-left"></i>
+                                    <!-- Standard arrow for the previous page -->
+                                </a>
+                            </li>
+                            {% endif %}
+
+        {% for num in users.paginator.page_range %}
+            {% if users.number == num %}
+                            <li class="page-item active">
+                                <a class="page-link" href="javascript:void(0)">{{ num }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if query %}&search={{ query }}{% endif %}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+        {% endfor %}
+
+                    {% if users.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ users.next_page_number }}{% if query %}&search={{ query }}{% endif %}{% if selected_grade %}&grade_id={{ selected_grade }}{% endif %}">
+                                &rsaquo;
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ users.paginator.num_pages }}{% if query %}&search={{ query }}{% endif %}{% if selected_grade %}&grade_id={{ selected_grade }}{% endif %}">
+                                &raquo;
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

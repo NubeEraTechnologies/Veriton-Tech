@@ -1,0 +1,306 @@
+{% extends 'bootcampapp/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+<div class="card-body py-0">
+    <div class="row">
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-secondary">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_schools}}</h4>
+                        <span>Total Schools</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-primary">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_grades}}</h4>
+                        <span>Total Grades</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-success">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_principles}}</h4>
+                        <span>Total Principles</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-dark">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_principles_pending}}</h4>
+                        <span>Total Pending Principle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-warning">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_teachers}}</h4>
+                        <span>Total Teachers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-light">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_teachers_pending}}</h4>
+                        <span>Total Pending Teachers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-primary">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_students}}</h4>
+                        <span>Total Students</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="dlab-cource bg-secondary">
+                <div class="d-flex align-items-center">
+                    <div class="ms-2">
+                        <h4 class="mb-0">{{total_students_pending}}</h4>
+                        <span>Total Pending Students</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <div id="application-tbl1_wrapper" class="dataTables_wrapper no-footer">
+            <table
+                class="table display mb-4 dataTablesCard order-table card-table text-black application dataTable no-footer"
+                id="application-tbl1"
+                role="grid"
+                aria-describedby="application-tbl1_info"
+            >
+                <thead>
+                    <tr role="row">
+                        <th
+                            class="sorting_asc"
+                            tabindex="0"
+                            aria-controls="application-tbl1"
+                            rowspan="1"
+                            colspan="1"
+                            aria-sort="ascending"
+                            aria-label="Name: activate to sort column descending"
+                            style="width: 274.859px;"
+                        >School Name</th>
+                        <th
+                            class="sorting_asc"
+                            tabindex="0"
+                            aria-controls="application-tbl1"
+                            rowspan="1"
+                            colspan="1"
+                            aria-sort="ascending"
+                            aria-label="Name: activate to sort column descending"
+                            style="width: 274.859px;"
+                        >Grade</th>
+                        <th
+                            class="sorting"
+                            tabindex="0"
+                            aria-controls="application-tbl1"
+                            rowspan="1"
+                            colspan="1"
+                            aria-label="Student ID: activate to sort column ascending"
+                            style="width: 180.828px;"
+                        >Total Active</th>
+                        <th
+                            class="sorting"
+                            tabindex="0"
+                            aria-controls="application-tbl1"
+                            rowspan="1"
+                            colspan="1"
+                            aria-label="Student ID: activate to sort column ascending"
+                            style="width: 180.828px;"
+                        >Total Hold</th>
+                        <th
+                            class="sorting"
+                            tabindex="0"
+                            aria-controls="application-tbl1"
+                            rowspan="1"
+                            colspan="1"
+                            aria-label="Student ID: activate to sort column ascending"
+                            style="width: 180.828px;"
+                        >Total Students</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in school_student %}
+                    <tr role="row" class="odd">
+                        <td>{{t.school__school_name}}</td>
+                        <td>{{t.grade__grade_name}}</td>
+                        <td>{{t.active_count}}</td>
+                        <td>{{t.on_hold_count}}</td>
+                        <td>{{t.grade_count}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-xl-6 col-sm-6">
+                    <table
+                        class="table display mb-4 dataTablesCard order-table card-table text-black application dataTable no-footer  bg-success"
+                        id="application-tbl1"
+                        role="grid"
+                        aria-describedby="application-tbl1_info"
+                    >
+                        <thead>
+                            <tr role="row">
+                                <th
+                                    class="sorting_asc"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending"
+                                    style="width: 274.859px;"
+                                >School Name</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Total Students</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in school_student_count %}
+                            <tr role="row" class="odd">
+                                <td>{{t.school__school_name }}</td>
+                                <td>{{t.student_count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <style></style>
+                        <div class="card-body py-0">
+                            
+                                    <canvas id="studentCountChart"></canvas>
+                            
+                        </div>
+                        <script>
+                         // Parse the labels and counts passed from the view
+                         const labels = JSON.parse('{{ labels|safe }}');
+                         const counts = JSON.parse('{{ counts|safe }}');
+                 
+                         const ctx = document.getElementById('studentCountChart').getContext('2d');
+                         const studentCountChart = new Chart(ctx, {
+                             type: 'line', // Chart type
+                             data: {
+                                 labels: labels,
+                                 datasets: [{
+                                     label: 'Number of Students',
+                                     data: counts,
+                                     
+                                     
+                                     borderWidth: 1
+                                 }]
+                             },
+                             options: {
+                                 responsive: true,
+                                 plugins: {
+                                     legend: {
+                                         position: 'top',
+                                     },
+                                     title: {
+                                         display: true,
+                                         text: 'Distribution of Students by Date'
+                                     }
+                                 }
+                             }
+                         });
+                        </script>
+                </div>
+                <div class="col-xl-6 col-sm-6">
+                    <table
+                        class="table display mb-4 dataTablesCard order-table card-table text-black application dataTable no-footer"
+                        id="application-tbl1"
+                        role="grid"
+                        aria-describedby="application-tbl1_info"
+                    >
+                        <thead>
+                            <tr role="row">
+                                <th
+                                    class="sorting_asc"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-sort="ascending"
+                                    aria-label="Name: activate to sort column descending"
+                                    style="width: 274.859px;"
+                                >Grade</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Total Active</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Total Hold</th>
+                                <th
+                                    class="sorting"
+                                    tabindex="0"
+                                    aria-controls="application-tbl1"
+                                    rowspan="1"
+                                    colspan="1"
+                                    aria-label="Student ID: activate to sort column ascending"
+                                    style="width: 180.828px;"
+                                >Total Students</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in school_student_grade %}
+                            <tr role="row" class="odd">
+                                <td>{{t.grade__grade_name}}</td>
+                                <td>{{t.active_count}}</td>
+                                <td>{{t.on_hold_count}}</td>
+                                <td>{{t.grade_count}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

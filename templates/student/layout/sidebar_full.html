@@ -1,0 +1,127 @@
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+        
+<div class="dlabnav">
+    
+    <div class="dlabnav-scroll">
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        
+<div class="dlabnav">
+    <div class="card h-auto">
+        <div class="card-header border-0 pb-0">
+            <h4>Progress</h4>
+            
+        </div>
+        <div class="card-body pt-0">
+            <div class="progress-box">
+                <div class="progress">
+                    <!-- Update progress bar width based on watched percentage -->
+                    <div class="progress-bar bg-primary" style="width: {{ watched_percentage }}%; height:12px; border-radius:4px;" role="progressbar"></div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <!-- Display the progress percentage here instead of 'Full-Stack Web Developer' -->
+                    <h5 class="mb-0 fs-14 font-w600">{{ watched_percentage|floatformat:2 }}%</h5>
+                    <!-- Display watched lessons out of total lessons -->
+                    <span class="font-w600">Progress : {{ watched_lessons }}/{{ total_lessons }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dlabnav-scroll">
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'user-dashboard' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'studykit' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Study Kit</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'module-exams' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Module Test Results</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'student-calender' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Calender</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'exams-list' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Exams</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'user-profile' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Update Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'user-password' %}" class="" aria-expanded="false">
+                    <i class="fa fa-key"></i>
+                    <span class="nav-text">Change Password</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="" aria-expanded="false">
+                    <i class="fa fa-sign-out"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'user-dashboard' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'studykit' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Study Kit</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'user-profile' %}" class="" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Update Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'user-password' %}" class="" aria-expanded="false">
+                    <i class="fa fa-key"></i>
+                    <span class="nav-text">Change Password</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="" aria-expanded="false">
+                    <i class="fa fa-sign-out"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--**********************************
+            Sidebar end
+        ***********************************-->

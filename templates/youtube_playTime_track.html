@@ -1,0 +1,71 @@
+<h1>Track YouTube Video Play Time</h1>
+
+<!-- Embed the YouTube Video -->
+<div id="player"></div>
+
+<div id="video-info">
+    <p>Current time: <span id="current-time">0</span> seconds</p>
+    <p>Video duration: <span id="duration">0</span> seconds</p>
+    <p>Video watched: <span id="watched">No</span></p>
+</div>
+
+<script>
+  // Load the YouTube Iframe API script
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // Initialize variables to store video info
+  var player;
+  var videoDuration = 0;
+  var videoWatched = false;
+  const tolerance = 1.5;  // Tolerance for determining if the video is fully watched
+  const currentTimeElem = document.getElementById('current-time');
+  const durationElem = document.getElementById('duration');
+  const watchedElem = document.getElementById('watched');
+
+  // YouTube Player API setup
+  function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+          height: '360',
+          width: '640',
+          videoId: 'e6MhFghdQps',  // Your YouTube video ID
+          events: {
+              'onStateChange': onPlayerStateChange,
+              'onReady': onPlayerReady
+          }
+      });
+  }
+
+  // When the player is ready, get the video duration
+  function onPlayerReady(event) {
+      videoDuration = player.getDuration();
+      durationElem.textContent = videoDuration.toFixed(2);
+  }
+
+  // Track playtime and check if video is fully watched
+  let playInterval;
+
+  function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.PAUSED) {
+          if (!playInterval) {
+              // Start updating the current time only once when video starts playing or is paused
+              playInterval = setInterval(function() {
+                  const currentTime = player.getCurrentTime();
+                  currentTimeElem.textContent = currentTime.toFixed(2);
+
+                  // Check if the video has been fully watched with tolerance
+                  if (currentTime >= videoDuration - tolerance && !videoWatched) {
+                      videoWatched = true;
+                      watchedElem.textContent = "Yes";
+                  }
+              }, 1000);  // Update every second
+          }
+      } else if (event.data === YT.PlayerState.ENDED) {
+          // Clear interval when video ends to stop updating the current time
+          clearInterval(playInterval);
+          playInterval = null;
+      }
+  }
+</script>

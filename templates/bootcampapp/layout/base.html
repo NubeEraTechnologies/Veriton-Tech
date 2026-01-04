@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>January 2026 Boot Camp @ NubeEra </title>
+
+    <!-- FAVICONS ICON -->
+	<link rel="shortcut icon" type="image/png" href="/static/get/images/favicon.png" />
+	<link href="/static/get/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+	<link href="/static/get/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+	
+	<!-- Style css -->
+    <link href="/static/get/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+		<div class="lds-ripple">
+			<div></div>
+			<div></div>
+		</div>
+    </div>
+
+
+    <div id="main-wrapper">
+        <div class="container-fluid">
+			{% include "bootcampapp/layout/header.html" %}
+
+            {% include "bootcampapp/layout/sidebar.html" %}
+            
+        </div>
+        <div class="content-body">
+            {% block body %}{% endblock %}
+			
+        </div>
+       
+    </div>
+
+    
+    <!-- Required vendors -->
+    <script src="/static/get/vendor/global/global.min.js"></script>
+	<script src="/static/get/vendor/chart.js/Chart.bundle.min.js"></script>
+	<script src="/static/get/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+	
+	<!-- Apex Chart -->
+	<script src="/static/get/vendor/apexchart/apexchart.js"></script>
+	<script src="/static/get/vendor/bootstrap-datetimepicker/js/moment.js"></script>
+	<script src="/static/get/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+	<!-- Dashboard 1 -->
+	<script src="/static/get/js/dashboard/dashboard-1.js"></script>
+    <script src="/static/get/js/custom.js"></script>
+	<script src="/static/get/js/dlabnav-init.js"></script>
+	<script src="/static/get/js/demo.js"></script>
+	<script>
+		$(function () {
+			$('#datetimepicker').datetimepicker({
+				inline: true,
+			});
+		});
+		
+		$(document).ready(function(){
+			$(".booking-calender .fa.fa-clock-o").removeClass(this);
+			$(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
+		});
+		
+		
+	</script> 
+	 <script>
+        // Theme configuration
+        const dlabThemeSet1 = {
+            typography: "poppins",
+            version: "light",
+            layout: "vertical",
+            primary: "color_1",
+            headerBg: "color_1",
+            secondary: "color_1",
+            navheaderBg: "color_1",
+            sidebarBg: "color_1",
+            sidebarStyle: "compact",
+            sidebarPosition: "fixed",
+            headerPosition: "fixed",
+            containerLayout: "full",
+        };
+
+        // Apply theme settings
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.setAttribute('data-theme-version', 'dark');
+                document.body.style.backgroundColor = '#343a40'; // Dark background
+                document.body.style.color = '#ffffff'; // Light text
+            } else {
+                document.body.setAttribute('data-theme-version', 'light');
+                document.body.style.backgroundColor = '#f8f9fa'; // Light background
+                document.body.style.color = '#000000'; // Dark text
+            }
+            // Additional theme adjustments can be done here
+        }
+	</script> 
+
+</body>
+
+
+</html>

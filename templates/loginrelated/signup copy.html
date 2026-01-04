@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <title>January 2026 Boot Camp @ NubeEra </title>
+        <link rel="shortcut icon" type="image/x-icon" href="/static/dreamlms/img/favicon.svg">
+        <link rel="stylesheet" href="/static/dreamlms/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/dreamlms/plugins/fontawesome/css/fontawesome.min.css">
+        <link rel="stylesheet" href="/static/dreamlms/plugins/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="/static/dreamlms/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="/static/dreamlms/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="/static/dreamlms/plugins/feather/feather.css">
+        <link rel="stylesheet" href="/static/dreamlms/css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    </head>
+    <style>
+      * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Styling the container */
+    .container {
+      margin: 0 auto;
+      padding: 20px;
+      max-width: 400px;
+      background-color: #ffffff;
+    }
+    /* Style all input fields */
+    input {
+      width: 100%;
+      padding: 12px;
+      margin:6px 0 16px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    /* Style the submit button */
+    input[type=submit] {
+      background-color: #0f0fe9;
+      color: white;
+      cursor: pointer;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #4141fc;
+    }
+    /* The message box */
+    #password-message {
+      display: none;
+      background: #ffffff;
+      color: #000;
+      position: relative;
+      padding: 20px;
+      margin-top: 10px;
+      text-align: left;
+    }
+    #password-message h3 {
+      font-size: 15px;
+      margin-top: 0;
+      text-transform: uppercase;
+    }
+    
+    #password-message p {
+      margin: 8px 0;
+    }
+    .valid {
+      color: green;
+    }
+    .valid:before {
+      position: relative;
+      left: -35px;
+      content: "✔";
+    }
+    .invalid {
+      color: red;
+    }
+    .invalid:before {
+      position: relative;
+      left: -35px;
+      content: "✖";
+    }
+    /* Error message style */
+    .error-msg {
+      color: red;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    </style>
+    <body>
+        <div class="main-wrapper log-wrap">
+            <div class="row">
+                <div class="col-md-6 login-bg">
+                    <div class="owl-carousel login-slide owl-theme">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/static/dreamlms/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>
+                                    Welcome to
+                                    <br>
+                                    NubeeraLXP Courses.
+                                </h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/static/dreamlms/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>
+                                    Welcome to
+                                    <br>
+                                    NubeeraLXP Courses.
+                                </h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/static/dreamlms/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>
+                                    Welcome to
+                                    <br>
+                                    NubeeraLXP Courses.
+                                </h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 login-wrap-bg">
+                    <div class="login-wrapper">
+                        <div class="loginbox">
+                            <div class="img-logo">
+                                <div class="back-home">
+                                    <a href="{% url 'indexpage' %}">Back to Home</a>
+                                </div>
+                            </div>
+                            <h1>Sign up</h1>
+                            <form id="signup-form" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">First Name</label>
+                                            <input
+                                                type="text"
+                                                id="first_name"
+                                                name="first_name"
+                                                class="form-control"
+                                                placeholder="Enter your First Name"
+                                                required
+                                            >
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">User Name</label>
+                                            <input
+                                                id="username"
+                                                name="username"
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="Choose your user name"
+                                                required
+                                            >
+                                            <span id="username-status"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Last Name</label>
+                                            <input
+                                                type="text"
+                                                id="last_name"
+                                                name="last_name"
+                                                class="form-control"
+                                                placeholder="Enter your Last Name"
+                                                required
+                                            >
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">Password</label>
+                                            <div class="pass-group" id="passwordInput">
+                                                <input
+                                                    id="password"
+                                                    name="password"
+                                                    type="password"
+                                                    class="form-control pass-input"
+                                                    placeholder="Enter your password"
+                                                    required
+                                                >
+                                                <span class="toggle-password feather-eye"></span>
+                                            </div>
+                                            <div id="password-message">
+                                                <h3>Password must contain:</h3>
+                                                <p class="password-message-item invalid">
+                                                    At least <b>one lowercase letter</b>
+                                                </p>
+                                                <p class="password-message-item invalid">
+                                                    At least <b>one uppercase letter</b>
+                                                </p>
+                                                <p class="password-message-item invalid">
+                                                    At least <b>one number</b>
+                                                </p>
+                                                <p class="password-message-item invalid">
+                                                    Minimum <b>8 characters</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Profile Picture</label>
+                                    <input
+                                        type="file"
+                                        id="profile_pic"
+                                        name="profile_pic"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-check remember-me">
+                                    <label class="form-check-label mb-0">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="remember"
+                                            required
+                                        >
+                                        I agree to the
+                                        <a href="{% url 'termsandconditions' %}">Terms of Service</a>
+                                        and
+                                        <a href="{% url 'privacypolicy' %}">Privacy Policy.</a>
+                                    </label>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-start" type="submit">Create Account</button>
+                                </div>
+                            </form>
+                            
+                            <div class="google-bg text-center">
+                                <p class="mb-0">
+                                    Already have an account?
+                                    <a href="{% url 'userlogin' %}">Sign in</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="/static/dreamlms/js/jquery-3.6.0.min.js"></script>
+                <script src="/static/dreamlms/js/bootstrap.bundle.min.js"></script>
+                <script src="/static/dreamlms/js/owl.carousel.min.js"></script>
+                <script src="/static/dreamlms/js/passwordvalidation.js"></script>
+                <script src="/static/dreamlms/js/script.js"></script>
+                <script src="/static/js/password.js"></script>
+
+                <script>
+                    $(document).ready(function(){
+                        var isUsernameTaken = false;
+                
+                        $('#username').on('input', function() {
+                            debugger
+                            var username = $(this).val();
+                            if (username) {
+                                $.ajax({
+                                    url: '/check-username/',
+                                    data: {
+                                        'username': username
+                                    },
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        if (data.is_taken) {
+                                            $('#username-status').text('Username is already taken.').css('color', 'red');
+                                            isUsernameTaken = true;
+                                        } else {
+                                            $('#username-status').text('Username is available.').css('color', 'green');
+                                            isUsernameTaken = false;
+                                        }
+                                    }
+                                });
+                            } else {
+                                $('#username-status').text('');
+                                isUsernameTaken = false;
+                            }
+                        });
+                
+                        $('#signup-form').on('submit', function(event) {
+                            if (isUsernameTaken) {
+                                event.preventDefault();
+                            }
+                        });
+                    });
+                </script>
+            </body>
+        </html>

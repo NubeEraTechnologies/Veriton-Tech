@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100"> 
+<head>
+        <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	
+	<!-- PAGE TITLE HERE -->
+    <title>January 2026 Boot Camp @ NubeEra</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/get/images/favicon.png">
+    <link rel="stylesheet" href="/static/get/css/style.css">
+
+</head>
+
+<body class="body  h-100 white-bg"  >
+    <div class="container h-100">
+		<div class="row h-100 align-items-center justify-contain-center">
+			<div class="col-xl-12 mt-3">
+				<div class="card">
+					<div class="card-body p-0">
+						<div class="row m-0">
+							<div class="col-xl-6 col-md-6 sign text-center">
+								<div>
+									<div class="text-center my-5">
+									</div>
+									<img src="/static/get/images/log.png" class="education-img"></img>
+								</div>	
+							</div>
+							<div class="col-xl-6 col-md-6">
+								<div class="sign-in-your">
+									<h4 class="fs-20 font-w800 text-black">Sign in your account</h4>
+									<span>Welcome back! Login with your data that you entered<br> during registration</span>
+									<div class="mb-3"></div>
+									<form   method="post">
+                                        {% csrf_token %}
+										<div class="mb-3">
+											<label class="mb-1"><strong>User Name</strong></label>
+                                            <input
+                                            name="username"
+                                            id="username"
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Enter your user name"
+                                            required
+                                        >
+
+											 
+										</div>
+										<div class="mb-3">
+											<label class="mb-1"><strong>Password</strong></label>
+                                            <input
+                                            name="password"
+                                            id="password"
+                                            type="password"
+                                            class="form-control"
+                                            placeholder="Enter your password"
+                                            required
+                                        >
+											 
+										</div>
+                                        <div class="p-15">
+                                            {% if error_message %}
+                                            <div class="alert alert-danger " id="success-message">{{ error_message }}</div>
+                                            {% endif %}
+                                        </div>
+                                      
+										<div class="text-center">
+											<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+										</div>
+									</div>
+
+									</form>
+                                   
+                                    <script>
+                                        // Wait for the DOM to load
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                        // Select the success message
+                                        var message = document.getElementById("success-message");
+                                        if (message) {
+                                        // Set a timer to hide the message after 5 seconds (5000 ms)
+                                        setTimeout(function() {
+                                        message.style.display = 'none';
+                                        }, 5000);
+                                        }
+                                        });
+                                                            </script>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+ 
+</body>
+ 
+</html>

@@ -1,0 +1,10 @@
+django
+asgiref
+django-widget-tweaks
+Pillow
+pytz
+sqlparse
+django-ckeditor
+django-cors-headers
+requests
+cryptography

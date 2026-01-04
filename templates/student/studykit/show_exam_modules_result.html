@@ -1,0 +1,113 @@
+{% extends 'student/studentbase.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css" />
+<style>
+  ol.breadcrumb li + li:before {
+    content: "\f061";
+    display: inline-block;
+    font-family: "fontAwesome";
+    padding: 0 10px;
+  }
+  #player {
+    display: none;
+  }
+</style>
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li>
+        <a href="{% url 'user-dashboard' %}">Dashboard</a>
+      </li>
+      <li aria-current="page">View Module Exam Attempts</li>
+    </ol>
+  </nav>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+
+<div class="card">
+  <div class="table-responsive">
+    <table
+      class="table table-bordered"
+      id="dataTable"
+      width="100%"
+      cellspacing="0"
+    >
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Option 1</th>
+          <th>Option 2</th>
+          <th>Option 3</th>
+          <th>Option 4</th>
+          <th>Given Answer</th>
+          <th>Right Answer</th>
+          <th>Status</th>
+          <th>Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ques in results %}
+        
+        {% if ques.selected == ques.question__answer %}
+        <tr style="background-color: lightgreen;">
+        {% else %}
+        <tr style="background-color: lightcoral;">
+        {% endif %}
+          <td>{{ques.question__question|safe}}</td>
+          <td>{{ques.question__option1|safe}}</td>
+          <td>{{ques.question__option2|safe}}</td>
+          <td>{{ques.question__option3|safe}}</td>
+          <td>{{ques.question__option4|safe}}</td>
+          <td>{{ques.selected}}</td>
+          <td>{{ques.question__answer}}</td>
+          {% if ques.selected == ques.question__answer %}
+          <td>Correct</td>
+          {% else %}
+          <td>Wrong</td>
+          {% endif %}
+          <td>{{ques.marks}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

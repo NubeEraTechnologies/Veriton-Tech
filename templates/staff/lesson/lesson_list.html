@@ -1,0 +1,172 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+  display: inline-block;
+  font-family: 'fontAwesome';
+  padding: 0 10px;
+  }
+</style>
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'user-dashboard' %}">Dashboard</a>
+            </li>
+            <li>
+                <a href="{% url 'lesson_create' %}">New Lesson</a>
+            </li>
+            <li aria-current="page">View Lessons</li>
+           
+        </ol>
+    </nav>
+</div>
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+<div class="card">
+    <div class="table-responsive">
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+        <h4>You can click and drag the row to change the serail number, arrange serial number abd reload the page</h4>
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Grade</th>
+            <th>Module</th>
+            <th>Heading</th>
+            <th>Serial No</th>
+            <th>Preview</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody id="sortable-lessons">
+        {% for lesson in lessons %}
+        <tr 
+            data-id="{{ lesson.serialno }}" 
+            data-grade="{{ lesson.grade.id }}"  
+            data-module="{{ lesson.module.id }}"
+            data-heading="{{ lesson.heading }}"
+            id="lesson-{{ lesson.serialno }}"
+        >
+            <td>{{ lesson.grade }}</td>
+            <td>{{ lesson.module }}</td>
+            <td>{{ lesson.heading }}</td>
+            <td>{{ lesson.serialno }}</td>
+            <td>
+                <a class="btn btn-primary btn-xs" href="{% url 'lesson_preview' lesson.id %}">
+                    <span class="far fa-eye"></span>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-primary btn-xs" href="{% url 'lesson_update' lesson.id %}">
+                    <span class="far fa-edit"></span>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-danger btn-xs" href="{% url 'lesson_delete' lesson.id %}" onclick="return confirm('Are you sure?')">
+                    <span class="far fa-trash-alt"></span>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    var sortable = new Sortable(document.getElementById('sortable-lessons'), {
+        animation: 150,  // Animation when moving rows
+        onEnd: function (evt) {
+    let order = [];
+    let previousGrade = null;
+    let previousModule = null;
+    let serialNumber = 1;  // To reset the serial number for each grade and module combination
+
+    // Sort the rows, and set the correct serial number for each combination of grade and module
+    document.querySelectorAll('#sortable-lessons tr').forEach((row, index) => {
+        let currentGrade = row.getAttribute('data-grade');
+        let currentModule = row.getAttribute('data-module');
+        let currentHeading = row.getAttribute('data-heading');
+
+        // If the grade or module has changed, reset the serial number
+        if (currentGrade !== previousGrade || currentModule !== previousModule) {
+            serialNumber = 1;  // Reset serial number for the new grade and module combination
+            previousGrade = currentGrade;
+            previousModule = currentModule;
+        }
+
+        // Push the lesson details with the updated serial number
+        order.push({
+            'serialno': row.getAttribute('data-id'),  // Original serial number
+            'new_position': serialNumber,             // Updated serial number
+            'grade': currentGrade,
+            'module': currentModule,
+            'heading': currentHeading
+        });
+
+        // Increment the serial number for the next item within the same grade/module
+        serialNumber++;
+    });
+
+    // Send the updated order to the server
+    fetch("{% url 'update_lesson_order' %}", {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ order: order }),  // Send the updated serial numbers
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Order updated successfully');
+        } else {
+            console.error('Error updating order');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+    });
+</script>
+    </div>
+</div>
+{% endblock content %}

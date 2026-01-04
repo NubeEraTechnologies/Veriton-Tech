@@ -1,0 +1,202 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+    display: inline-block;
+    font-family: 'fontAwesome';
+    padding: 0 10px;
+  }
+</style>
+
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li><a href="{% url 'user-dashboard' %}">Dashboard</a></li>
+      <li aria-current="page">Manage Grades</li>
+    </ol>
+  </nav>
+</div>
+
+<!-- Add Grade Button -->
+<button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addGradeModal">Add Grade</button>
+
+<!-- Grade Table -->
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Grade Name</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be dynamically populated via JavaScript -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Grade Modal -->
+<div class="modal fade" id="addGradeModal" tabindex="-1" aria-labelledby="addGradeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addGradeModalLabel">Add Grade</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="newGradeName" class="form-control" placeholder="Grade Name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="addGrade()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Grade Modal -->
+<div class="modal fade" id="updateGradeModal" tabindex="-1" aria-labelledby="updateGradeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateGradeModalLabel">Update Grade</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="updateGradeId">
+        <input type="text" id="updateGradeName" class="form-control" placeholder="Grade Name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="updateGrade()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript for API Integration -->
+<script>
+  debugger;
+  const apiBaseUrl = 'http://127.0.0.1:786/api/grades/';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxNjg0NDc1LCJpYXQiOjE3MzE2ODA4NzUsImp0aSI6IjM1NWViZWE0Y2I4ZjRiMDk5MDFkOWY1NDhkMmQ4ODI2IiwidXNlcl9pZCI6M30.NLCNr9DdqDWiXj_ovgZx-00wTEF7GC-c_Ykzm71hfWE'; // Replace with the actual token for authentication
+
+  // Fetch and display grades
+  function fetchGrades() {
+    fetch(apiBaseUrl, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.querySelector('#dataTable tbody');
+        tableBody.innerHTML = '';
+        data.forEach(grade => {
+          tableBody.innerHTML += `
+            <tr>
+              <td>${grade.grade_name}</td>
+              <td>
+                <button class="btn btn-primary btn-xs" onclick="openUpdateModal(${grade.id}, '${grade.grade_name}')">
+                  <span class="far fa-edit"></span>
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-danger btn-xs" onclick="deleteGrade(${grade.id})">
+                  <span class="far fa-trash-alt"></span>
+                </button>
+              </td>
+            </tr>`;
+        });
+      })
+      .catch(error => console.error('Error fetching grades:', error));
+  }
+
+  // Add a new grade
+  function addGrade() {
+    const gradeName = document.getElementById('newGradeName').value;
+
+    fetch(apiBaseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ grade_name: gradeName })
+    })
+      .then(response => {
+        if (response.ok) {
+          fetchGrades();
+          document.getElementById('newGradeName').value = '';
+          const modal = bootstrap.Modal.getInstance(document.getElementById('addGradeModal'));
+          modal.hide();
+        } else {
+          console.error('Error adding grade');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  // Open update modal
+  function openUpdateModal(id, name) {
+    document.getElementById('updateGradeId').value = id;
+    document.getElementById('updateGradeName').value = name;
+    const modal = new bootstrap.Modal(document.getElementById('updateGradeModal'));
+    modal.show();
+  }
+
+  // Update an existing grade
+  function updateGrade() {
+    const id = document.getElementById('updateGradeId').value;
+    const gradeName = document.getElementById('updateGradeName').value;
+
+    fetch(`${apiBaseUrl}${id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ grade_name: gradeName })
+    })
+      .then(response => {
+        if (response.ok) {
+          fetchGrades();
+          const modal = bootstrap.Modal.getInstance(document.getElementById('updateGradeModal'));
+          modal.hide();
+        } else {
+          console.error('Error updating grade');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  // Delete a grade
+  function deleteGrade(id) {
+    if (confirm('Are you sure?')) {
+      fetch(`${apiBaseUrl}${id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            fetchGrades();
+          } else {
+            console.error('Error deleting grade');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  }
+
+  // Initialize the page
+  document.addEventListener('DOMContentLoaded', fetchGrades);
+</script>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+  display: inline-block;
+  font-family: 'fontAwesome';
+  padding: 0 10px;
+  }
+</style>
+<!-- ckeditor -->
+<script src="/static/ckeditor/ckeditor.js"></script>
+<script src="/static/ckeditor/js/sample.js"></script>
+<link rel="stylesheet" href="/static/ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'user-dashboard' %}">Dashboard</a>
+            </li>
+            <li>
+                <a href="{% url 'lesson_create' %}">Create Lesson</a>
+            </li>
+            <li>
+                <a href="{% url 'lesson_list' %}">Lesson List</a>
+            </li>
+            <li aria-current="page">Lesson Preview</li>
+        </ol>
+    </nav>
+</div>
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="card">
+    <div class="card-body">
+        <div class="course-content d-flex justify-content-between flex-wrap">
+            <div>
+                <h3>{{heading|safe}}</h3>
+            </div>
+        </div>
+        <div class="video-img style-1">
+            <div class="view-demo">
+                <div id="player"></div>
+                <script>
+                    // 2. This code loads the IFrame Player API code asynchronously.
+                    var tag = document.createElement('script');
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+              
+                    // 3. This function creates an <iframe> (and YouTube player)
+                    //    after the API code downloads.
+                    var player;
+                    function onYouTubeIframeAPIReady() {
+                        player = new YT.Player('player', {
+                            height: '250',
+                            width: '100%',
+                            videoId: '{{ video|safe }}',  // Use Django variable properly
+                            playerVars: {
+                                'playsinline': 1
+                            },
+                            events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                            }
+                        });
+                    }
+              
+                    // 4. The API will call this function when the video player is ready.
+                    function onPlayerReady(event) {
+                        event.target.playVideo();
+                    }
+              
+                    // 5. The API calls this function when the player's state changes.
+                    //    The function indicates that when playing a video (state=1),
+                    //    the player should play for six seconds and then stop.
+                    var done = false;
+                    function onPlayerStateChange(event) {
+                        if (event.data == YT.PlayerState.PLAYING && !done) {
+                            setTimeout(stopVideo, 6000);
+                            done = true;
+                        }
+                    }
+                    function stopVideo() {
+                        player.stopVideo();
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="course-details-tab style-2 mt-4">
+            <nav>
+                <div class="nav nav-tabs tab-auto" id="nav-tab" role="tablist">
+                    <button
+                        class="nav-link active"
+                        id="nav-about-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-about"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-about"
+                        aria-selected="true"
+                    >About</button>
+                    <button
+                        class="nav-link"
+                        id="nav-reqmaterial-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-reqmaterial"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-reqmaterial"
+                        aria-selected="false"
+                    >Required Material</button>
+                    {% if digram %}
+                    <button
+                        class="nav-link "
+                        id="nav-digram-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-digram"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-digram"
+                        aria-selected="false"
+                    >Circuit Daigram</button>
+                    {% endif %}
+                    
+                    {% if code %}
+                    <button
+                        class="nav-link "
+                        id="nav-code-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-code"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-code"
+                        aria-selected="false"
+                    >Code</button>
+                    {% endif %}
+                    <button
+                        class="nav-link "
+                        id="nav-process-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-process"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-process"
+                        aria-selected="false"
+                    >Procedure</button>
+                    <button
+                        class="nav-link "
+                        id="nav-get-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-get"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-get"
+                        aria-selected="false"
+                    >What you get</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div
+                    class="tab-pane fade show active"
+                    id="nav-about"
+                    role="tabpanel"
+                    aria-labelledby="nav-about-tab"
+                >
+                    <div class="about-content">
+                        {{about|safe}}
+                    </div>
+                </div>
+                <div
+                    class="tab-pane fade "
+                    id="nav-reqmaterial"
+                    role="tabpanel"
+                    aria-labelledby="nav-reqmaterial-tab"
+                >
+                    {{reqmaterial|safe}}
+                </div>
+                <div
+                    class="tab-pane fade "
+                    id="nav-digram"
+                    role="tabpanel"
+                    aria-labelledby="nav-digram-tab"
+                >
+                    {{digram|safe}}
+                </div>
+                <div
+                    class="tab-pane fade "
+                    id="nav-code"
+                    role="tabpanel"
+                    aria-labelledby="nav-code-tab"
+                >
+                    {{code|safe}}
+                </div>
+                <div
+                    class="tab-pane fade "
+                    id="nav-process"
+                    role="tabpanel"
+                    aria-labelledby="nav-process-tab"
+                >
+                    {{process|safe}}
+                </div>
+                <div
+                    class="tab-pane fade "
+                    id="nav-get"
+                    role="tabpanel"
+                    aria-labelledby="nav-get-tab"
+                >
+                    {{get|safe}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

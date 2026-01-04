@@ -1,0 +1,57 @@
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+<div class="dlabnav">
+    <div class="dlabnav-scroll">
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'user-dashboard' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Teachers</span>
+                </a>
+                <ul aria-expanded="false">
+
+                    <li>
+                        <a href="{% url 'teacher-list' %}">Teacher List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'create-teacher' %}">Create Teacher</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'teacher-list-pending' %}">Pending Teacher List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'all-teacher-attendance-report-monthwise' %}">Teacher Attendance</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'user-profile' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Update Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'user-password' %}" class="" aria-expanded="false">
+                    <i class="fa fa-key"></i>
+                    <span class="nav-text">Change Password</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="" aria-expanded="false">
+                    <i class="fa fa-sign-out"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--**********************************
+            Sidebar end
+        ***********************************-->

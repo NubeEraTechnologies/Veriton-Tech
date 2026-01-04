@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100"> 
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <title>January 2026 Boot Camp @ NubeEra</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/static/drm/img/favicon.svg">
+        <script src="/static/drm/js/theme-script.js" type="39161eece84e35759e215c36-text/javascript"></script>
+        <link rel="stylesheet" href="/static/drm/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/drm/plugins/fontawesome/css/fontawesome.min.css">
+        <link rel="stylesheet" href="/static/drm/plugins/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="/static/drm/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="/static/drm/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="/static/drm/plugins/feather/feather.css">
+        <link rel="stylesheet" href="/static/drm/css/style.css">
+    </head>
+    <body class="body  " style="background-image: url('/static/image/login1.png'); background-size:cover;">
+        <div class="main-wrapper log-wrap">
+            <div class="row">
+                <div class="col-md-6 login-wrap-bg">
+                    <div class="login-wrapper">
+                        <div class="loginbox">
+                            <div class="img-logo">
+                                <div class="back-home">
+                                    <a href="{% url 'home' %}">Back to Home</a>
+                                </div>
+                            </div>
+                            <h1>Sign into Your Account</h1>
+                            <div class="sign-in-your">
+                                <span class="fs-20 font-w800 text-red">
+                                    Welcome back! Login with your data that you entered during registration
+                                </span>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="mb-1">
+                                            <strong class="fs-20 font-w800 text-red">User Name</strong>
+                                        </label>
+                                        <input
+                                            name="username"
+                                            id="username"
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="Enter your user name"
+                                            required
+                                        >
+
+											 
+										</div>
+										<div class="mb-3">
+											<label class="mb-1"><strong>Password</strong></label>
+                                            <input
+                                            name="password"
+                                            id="password"
+                                            type="password"
+                                            class="form-control"
+                                            placeholder="Enter your password"
+                                            required
+                                        >
+											 
+										</div>
+                                        <div class="p-15">
+                                            {% if error_message %}
+                                            <div class="alert alert-danger " id="success-message">{{ error_message }}</div>
+                                            {% endif %}
+                                        </div>
+                                      
+
+										<div class="row d-flex justify-content-between mt-4 mb-2">
+											<div class="mb-3">
+											   <div class="form-check custom-checkbox ms-1">
+													<input type="checkbox" class="form-check-input" id="basic_checkbox_1">
+													<label class="form-check-label" for="basic_checkbox_1">Remember my preference</label>
+												</div>
+											</div>
+											<div class="mb-3">
+												<a href="#">Forgot Password?</a>
+											</div>
+										</div>
+										<div class="text-center">
+											<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+										</div>
+									</form>
+                                   
+                                    <script>
+                                        // Wait for the DOM to load
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                        // Select the success message
+                                        var message = document.getElementById("success-message");
+                                        if (message) {
+                                        // Set a timer to hide the message after 5 seconds (5000 ms)
+                                        setTimeout(function() {
+                                        message.style.display = 'none';
+                                        }, 5000);
+                                        }
+                                        });
+                                                            </script>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+ 
+</body>
+ 
+</html>

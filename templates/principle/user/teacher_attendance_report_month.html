@@ -1,0 +1,47 @@
+{% extends 'principle/principlebase.html' %}
+{% load bootcamp_filters %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4>Teacher Attendance Report - Monthly</h4>
+        <form method="POST" action="{% url 'all-teacher-attendance-report-monthwise' %}" class="form-inline">
+            {% csrf_token %}
+            <input type="month" class="form-control" name="date" placeholder="Select Month" value="{{ search_date|date:'Y-m' }}" required>
+            <button type="submit" class="btn btn-primary ml-2">Search</button>
+        </form>
+    </div>
+    <div class="card-body">
+        {% if report %}
+        <h5>Attendance Report for {{ search_date }}</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Teacher</th>
+                    {% for day in current_month_days %}
+                        <th>{{ day.day }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher_id, data in report.items %}
+                    <tr>
+                        <td>{{ data.name }}</td>
+                        {% for status in data.attendance %}
+                            <td>
+                                {% if status == 'Y' %}
+                                    <i class="fas fa-check text-success"></i>
+                                {% else %}
+                                    <i class="fas fa-times text-danger"></i>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No attendance data available for the selected month.</p>
+    {% endif %}
+    </div>
+</div>
+{% endblock content %}

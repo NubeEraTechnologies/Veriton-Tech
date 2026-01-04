@@ -1,0 +1,107 @@
+{% extends 'staff/staffbase.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="/static/get/css/style.css">
+<style>
+  ol.breadcrumb li+li:before {
+    content: '\f061';
+  display: inline-block;
+  font-family: 'fontAwesome';
+  padding: 0 10px;
+  }
+  </style>
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li><a href="{% url 'user-dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'school_list' %}">School List</a></li>
+      <li aria-current="page">Creating School</li>
+    </ol>
+  </nav>
+</div>
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Create School</h4>
+        </div>
+        <div class="card-body">
+            <div class="basic-form">
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">School Name</label>
+                            <input type="text" class="form-control" name="school_name" id="school_name" placeholder="Enter School Name" required>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Contact Person</label>
+                            <input type="text" class="form-control" name="contact_person" id="contact_person" placeholder="Enter Contact Person Name" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">School Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter School Email" required>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" name="address" id="address" placeholder="Enter Address" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="Enter Address" required>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                    
+            </div>
+        </div>
+    </div>
+
+</form>
+{% endblock content %}

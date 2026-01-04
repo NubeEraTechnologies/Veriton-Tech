@@ -1,0 +1,121 @@
+{% extends 'teacher/teacherbase.html' %} {% block content %} {%load static%}
+
+<style>
+  ol.breadcrumb li+li:before {
+    content: "\f061";
+    display: inline-block;
+    font-family: "fontAwesome";
+    padding: 0 10px;
+  }
+
+  #player {
+    display: none;
+  }
+</style>
+<div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li>
+        <a href="{% url 'user-dashboard' %}">Dashboard</a>
+      </li>
+      <li><a href="{% url 'exam_create' %}">New Exam</a></li>
+      <li><a href="{% url 'exam_list' %}">Exam List</a></li>
+      <li aria-current="page">View Result Details</li>
+    </ol>
+  </nav>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Show the modal when the DOM is ready
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+            keyboard: false
+        });
+
+        // Show the modal
+        successModal.show();
+
+        // Hide the modal after 5 seconds
+        setTimeout(function() {
+            successModal.hide();
+        }, 3000);
+    });
+</script>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Option 1</th>
+          <th>Option 2</th>
+          <th>Option 3</th>
+          <th>Option 4</th>
+          <th>Right Answer</th>
+          <th>Question Marks</th>
+          <th>Selected Answer</th>
+          <th>Obtained Mark</th>
+        </tr>
+      </thead>
+      {% for t in exams %}
+      <tr>
+        <td>{{t.question.question|safe}}</td>
+        <td>{{t.question.option1|safe}}</td>
+        <td>{{t.question.option2|safe}}</td>
+        <td>{{t.question.option3|safe}}</td>
+        <td>{{t.question.option4|safe}}</td>
+        <td>Option {{t.question.answer}}</td>
+        <td>{{t.question.marks}}</td>
+        <td>{{t.selected}}</td>
+        <td>
+          {% if t.question.answer == t.selected %} {{t.question.marks}} {% else
+          %} 0 {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Total Marks</th>
+          <th>Total Correct</th>
+          <th>Total Wrong</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ exams.marks }}</td>
+          <td>{{ exams.wrong }}</td>
+          <td>{{ exams.correct }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,143 @@
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+<div class="dlabnav">
+    <div class="dlabnav-scroll">
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'user-dashboard' %}" class="" aria-expanded="false">
+                    <i class="bi bi-grid"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-building"></i>
+                    <span class="nav-text">Schools</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'school_list' %}">Schools List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'school_create' %}">Create Schools</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Grades</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'grade_list' %}">Grades List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'grade_create' %}">Create Grades</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Divisions</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'division_list' %}">Divisions List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'division_create' %}">Create Divisions</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Modules</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'module_list' %}">Modules List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'module_create' %}">Create Modules</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Lesson</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'lesson_list' %}">Lessons List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'lesson_create' %}">Create Lessons</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Module Questions</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'modulequestion_list' %}">Module Questions List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'modulequestion_create' %}">Create Module Question</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <i class="bi bi-heart"></i>
+                    <span class="nav-text">Scheduler</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li>
+                        <a href="{% url 'scheduler_list' %}">Scheduler List</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'scheduler_calender' %}">Scheduler Calender</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'create_scheduler' %}">Create Scheduler</a>
+                    </li>
+                </ul>
+            </li>
+            <HR>
+            <a href="{% url 'user-profile' %}" class="" aria-expanded="false">
+                <i class="fa fa-user"></i>
+                <span class="nav-text">Update Profile</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user-password' %}" class="" aria-expanded="false">
+                <i class="fa fa-key"></i>
+                <span class="nav-text">Change Password</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'logout' %}" class="" aria-expanded="false">
+                <i class="fa fa-sign-out"></i>
+                <span class="nav-text">Logout</span>
+            </a>
+        </li>
+        </ul>
+    </div>
+</div>
+<!--**********************************
+            Sidebar end
+        ***********************************-->

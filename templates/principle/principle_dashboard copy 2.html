@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container-fluid {
+            padding: 20px;
+        }
+        .card {
+            margin: 10px 0;
+        }
+        .card-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .chart-container {
+            height: 300px;
+            width: 100%;
+        }
+        .event-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .event-list li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h2 class="text-center mb-4">Dashboard</h2>
+
+        <div class="row">
+            <!-- Student Progress Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Student Progress</div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="studentProgressChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade Attendance Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Grade Attendance</div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="gradeAttendanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Trainer Attendance Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Trainer Attendance</div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="trainerAttendanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar and Events -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Calendar and Events</div>
+                    <div class="card-body">
+                        <div class="event-list">
+                            <h5>Upcoming Events</h5>
+                            <ul>
+                                <li>Nov 15 - Seminar on Modern Web Development</li>
+                                <li>Nov 20 - Workshop on AI in Education</li>
+                                <li>Dec 1 - Annual Student Showcase</li>
+                            </ul>
+                            <h5 class="mt-4">Important Dates</h5>
+                            <ul>
+                                <li>Dec 10 - Final Exams Begin</li>
+                                <li>Dec 22 - Winter Break Starts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        const studentProgressData = {
+            labels: ['John', 'Mary', 'David', 'Alice', 'Michael'],
+            datasets: [{
+                label: 'Progress (%)',
+                data: [75, 88, 67, 92, 85],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const gradeAttendanceData = {
+            labels: ['A', 'B', 'C', 'D', 'E', 'F'],
+            datasets: [{
+                label: 'Attendance (%)',
+                data: [95, 90, 88, 85, 80, 70],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        const trainerAttendanceData = {
+            labels: ['Trainer 1', 'Trainer 2', 'Trainer 3', 'Trainer 4'],
+            datasets: [{
+                label: 'Attendance (%)',
+                data: [98, 92, 89, 95],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Charts Initialization
+        const ctx1 = document.getElementById('studentProgressChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: studentProgressData,
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('gradeAttendanceChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: gradeAttendanceData,
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        const ctx3 = document.getElementById('trainerAttendanceChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'pie',
+            data: trainerAttendanceData,
+        });
+    </script>
+</body>
+</html>
