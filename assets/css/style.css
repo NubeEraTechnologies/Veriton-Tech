@@ -87,7 +87,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 a:hover,
 a:active,
@@ -247,7 +247,7 @@ button.bg-danger:hover {
 }
 .text-primary,
 .dropdown-menu > li > a.text-primary {
-	color: #F66962 !important;
+	color: #a03593 !important;
 }
 .text-success,
 .dropdown-menu > li > a.text-success {
@@ -817,7 +817,7 @@ button.bg-danger:hover {
 	padding: 0;
 }
 .main-nav > li.active > a {
-	color: #F66962;
+	color: #a03593;
 }
 .main-nav > li .submenu li a {
     display: block;
@@ -939,7 +939,7 @@ button.bg-danger:hover {
 .header-navbar-rht li a.header-sign {
 	min-width: 150px;
 	padding: 14px 15px;
-	background: rgb(241 241 241 / 42%);
+	background: #fff;
 	border-radius: 46.9159px;
 	text-align: center;
 }
@@ -1321,7 +1321,7 @@ button.bg-danger:hover {
 	margin-bottom: 2px;
 }
 .wish-content h5 {
-	color: #F66962;
+	color: #a03593;
 	font-size: 14px;
 	font-weight: 700;
 	margin-bottom: 0;
@@ -1417,7 +1417,7 @@ button.bg-danger:hover {
     width: 31px;
 }
 .bar-icon span {
-    background-color: #f66962;
+    background-color: #a03593;
     display: block;
     float: left;
     height: 3px;
@@ -1501,7 +1501,7 @@ html.menu-opened body {
 	margin-right: 5px;
 }
 .footer-widget.footer-menu ul li a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .footer-contact-info {
 	color: #26292c;
@@ -1542,7 +1542,7 @@ html.menu-opened body {
 	text-align: right;
 }
 .footer-bottom .copyright-text p a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .privacy-policy ul {
 	display: -webkit-inline-box;
@@ -1561,7 +1561,7 @@ html.menu-opened body {
 	color: #000;
 }
 .privacy-policy ul li a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .privacy-policy ul li:last-child {
 	border-right: 0;
@@ -1624,6 +1624,8 @@ html.menu-opened body {
 }
 .girl-slide-img img {
 	width: 100%;
+	border-radius: 50px;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 .location-search .form-control {
 	padding-right: 160px;
@@ -1695,7 +1697,7 @@ html.menu-opened body {
 .banner-content .input-group .search-icon {
 	display: flex;
 	align-items: center;
-	color: #F66962;
+	color: #a03593;
 }
 .banner-content .input-group .form-control::placeholder {
 	color: #a2a2a2;
@@ -1779,10 +1781,10 @@ html.menu-opened body {
 	top: auto;
 }
 .banner-content .sub-btn {
-	background: #f66962;
+	background: #a03593;
 	border-radius: 50px !important;
 	font-weight: bold;
-	border: 1px solid #f66962;
+	border: 1px solid #a03593;
     margin: 0px;
 	font-size: 18px;
 	line-height: 18px;
@@ -1814,7 +1816,7 @@ html.menu-opened body {
 	letter-spacing: 0.9px;
 }
 .section-sub-head span {
-    color: #F66962;
+    color: #a03593;
     font-size: 18px;
     font-weight: 700;
     padding-bottom: 18px;
@@ -2023,7 +2025,7 @@ html.menu-opened body {
 }
 .owl-theme .owl-dots .owl-dot.active span, 
 .owl-theme .owl-dots .owl-dot:hover span {
-    background: #F66962;
+    background: #a03593;
 	width: 50px;
     height: 15px;
 	transition: all 0.5s ease;
@@ -2098,7 +2100,7 @@ html.menu-opened body {
     -webkit-transition: all 0.5s ease;
 }
 .product:hover .course-name h4 a:hover, .product:hover .product-content h3 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .product:hover .rating-img img,
 .product:hover .course-view img {
@@ -2138,7 +2140,7 @@ html.menu-opened body {
 	line-height: 1.3;
 }
 .product-content h3 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .product-content .instructor-text {
 	max-width: 320px;
@@ -2306,7 +2308,7 @@ html.menu-opened body {
 }
 .price h3 {
 	font-size: 24px;
-	color: #F66962;
+	color: #a03593;
 	font-weight: 700;
 	margin-bottom: 0;
 }
@@ -2440,7 +2442,7 @@ html.menu-opened body {
 	margin-bottom: 20px;
 }
 .course-list li i {
-	color: #F66962;
+	color: #a03593;
 	margin-right: 15px;
 }
 .latest-blog {
@@ -2671,7 +2673,7 @@ html.menu-opened body {
 .testimonial-four .swiper-button-prev:hover, 
 .testimonial-four .swiper-button-next:hover {
     color: #fff;
-	background: #f66962;
+	background: #a03593;
     opacity: 1;
 }
 .testimonial-four .slick-prev:hover:before, 
@@ -2685,7 +2687,7 @@ html.menu-opened body {
 }
 .testimonial-four .slick-next:focus, 
 .testimonial-four .slick-prev:focus {
-    background: #f66962;
+    background: #a03593;
 }
 .testimonial-four .slick-prev:before {
     font-family: "Font Awesome 5 Free";
@@ -2866,7 +2868,7 @@ html.menu-opened body {
 	border-radius: 0;
 }
 .remember-me a {
-	color: #F66962;
+	color: #a03593;
 }
 .pass-group {
     position: relative;
@@ -2897,7 +2899,7 @@ html.menu-opened body {
 	font-size: 14px;
 }
 .google-bg p a {
-	color: #F66962;
+	color: #a03593;
 }
 .sign-google ul li a img {
 	margin-right: 10px;
@@ -2928,7 +2930,7 @@ html.menu-opened body {
 	color: #6e82a3;
 }
 .toggle-password.feather-eye-off {
-	color: #F66962;
+	color: #a03593;
 }
 .pass-checked {
 	position: absolute;
@@ -3239,7 +3241,7 @@ html.menu-opened body {
 	color: #685F78;
 }
 .your-done p a {
-	color: #F66962;
+	color: #a03593;
 }
 .work-done {
 	position: absolute;
@@ -3268,7 +3270,7 @@ html.menu-opened body {
 	margin-top: 39px;
 }
 .reset-account p a {
-    color: #F66962;
+    color: #a03593;
 }
 .verification-code .form-group {
 	display: -webkit-box;
@@ -3587,7 +3589,7 @@ input[type=password]::-ms-clear
 .title-sec h5 {
 	font-weight: 700;
 	font-size: 18px;
-	color: #F66962;
+	color: #a03593;
 	margin-bottom: 18px;
 }
 .title-sec h2 {
@@ -3741,9 +3743,9 @@ input[type=password]::-ms-clear
 	padding: 12px;
     font-weight: 700;
 	background: #FFFFFF;
-	border: 1px solid #F66962;
+	border: 1px solid #a03593;
 	border-radius: 5px;
-	color: #F66962;
+	color: #a03593;
 	transition: 0.7s;
 }
 .price-box ul {
@@ -3756,8 +3758,8 @@ input[type=password]::-ms-clear
 	margin-bottom: 10px;
 }
 .price-box:hover .btn-free {
-	border: 1px solid #F66962;
-	background: #F66962;
+	border: 1px solid #a03593;
+	background: #a03593;
 	color: #FFF;
 }
 .recom-badge {
@@ -3776,7 +3778,7 @@ input[type=password]::-ms-clear
 .notify-sec h5 {
 	font-weight: 700;
 	font-size: 18px;
-	color: #F66962;
+	color: #a03593;
 	margin-bottom: 38px;
 }
 .btn-mark {
@@ -3888,7 +3890,7 @@ input[type=password]::-ms-clear
 	font-family: 'Poppins', sans-serif;
 }
 .wishlist-info h5 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .wishlist-info .course-view {
 	margin-left: 30px;
@@ -3905,7 +3907,7 @@ input[type=password]::-ms-clear
 	padding: 6px 12px;
 }
 .price-amt h4 {
-	color: #F66962;
+	color: #a03593;
 	font-weight: 700;
 	font-family: 'Poppins', sans-serif;
 	margin-bottom: 0;
@@ -4243,16 +4245,16 @@ input[type=password]::-ms-clear
 }
 .btn-wish {
 	background: #FFFFFF;
-	border: 1px solid #F66962;
+	border: 1px solid #a03593;
 	border-radius: 50px;
 	padding: 10px;
-	color: #F66962;
+	color: #a03593;
 	font-size: 14px;
 	font-weight: 500;
 	margin-bottom: 15px;
 }
 .btn-wish:hover {
-	background: #F66962;
+	background: #a03593;
 	color: #FFF;
 }
 .include-sec ul, .feature-sec ul {
@@ -4299,8 +4301,8 @@ input[type=password]::-ms-clear
 	margin: 0;
 }
 .btn-cart {
-	background: #F66962;
-	border: 1px solid #F66962;
+	background: #a03593;
+	border: 1px solid #a03593;
 	border-radius: 50px;
 	font-weight: 500;
 	font-size: 14px;
@@ -4812,7 +4814,7 @@ input[type=password]::-ms-clear
 	margin-bottom: 15px;
 }
 .terms-text h3 span, .terms-text p a {
-	color: #F66962;
+	color: #a03593;
 }
 .terms-text h4 {
     font-size: 16px;
@@ -4870,7 +4872,7 @@ input[type=password]::-ms-clear
 	color: #fff;
 }
 .profile-info-blk h4 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .profile-info-blk h4 span {
 	background: #fff;
@@ -4892,7 +4894,7 @@ input[type=password]::-ms-clear
 	color: #ffffff;
 }
 .profile-info-social li a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .profile-info-social li:not(:last-child) {
 	margin-right: 14px;
@@ -5080,7 +5082,7 @@ input[type=password]::-ms-clear
 	font-size: 18px;
 }
 .student-list .profile-info-social li a:hover {
-    color: #F66962;
+    color: #a03593;
 }
 
 /*-----------------
@@ -5285,7 +5287,7 @@ input[type=password]::-ms-clear
 	font-size: 15px;
 }
 .settings-invoice-blk table tbody tr td .invoice-no {
-	color: #F66962;
+	color: #a03593;
 }
 .settings-invoice-blk table tbody tr td .badge {
 	font-size: 14px;
@@ -5324,7 +5326,7 @@ input[type=password]::-ms-clear
 	vertical-align: middle;
 }
 .settings-inner-blk table tbody tr td .btn-style:hover {
-	background-color: #F66962;
+	background-color: #a03593;
 	color: #ffffff;
 }
 .settings-inner-blk table tbody tr td .btn-style svg{
@@ -5481,7 +5483,7 @@ input[type=password]::-ms-clear
 	background: #FF5364;
 }
 .settings-inner-blk table .link {
-	color: #F66962;
+	color: #a03593;
 }
 .settings-inner-blk .info-high {
 	background: #E53935;
@@ -5498,7 +5500,7 @@ input[type=password]::-ms-clear
 .new-ticket-blk h4{
 	font-size: 24px;
 	margin-bottom: 23px;
-	color: #F66962;
+	color: #a03593;
 }
 .new-ticket-blk .form-control {
 	border-color: rgba(255, 222, 218, 0.71);
@@ -5581,7 +5583,7 @@ input[type=password]::-ms-clear
 	margin-bottom: 15px;
 }
 .bug-software-head p {
-	color: #F66962;
+	color: #a03593;
 	font-size: 14px;
 	font-weight: 400;
 	margin-bottom: 0px;
@@ -6112,7 +6114,7 @@ input[type=password]::-ms-clear
 	margin-left: auto;
 }
 .settings-top-widget .stat-info.ttl-tickets .student-ticket-view h3 {
-    color: #F66962;
+    color: #a03593;
 	margin-top: 0;
 }
 .settings-top-widget .stat-info.open-tickets .student-ticket-view h3 {
@@ -6403,7 +6405,7 @@ input[type=password]::-ms-clear
 	color: #fff;
 }
 .inner-banner h5 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .view-icons {
     display: inline-flex;
@@ -6470,7 +6472,7 @@ input[type=password]::-ms-clear
 }
 .course-design .product:hover .product-content h3 a:hover,
 .course-design .product:hover .course-name h4 a:hover {
-    color: #F66962;
+    color: #a03593;
 }
 .course-share .active-heart i {
     color: #FF5364;
@@ -6544,7 +6546,7 @@ input[type=password]::-ms-clear
 .show-filter .search-group i {
 	position: absolute;
 	left: 9px;
-	color: #F66962;
+	color: #a03593;
 }
 .categories-head i {
 	margin-left: auto;
@@ -6666,7 +6668,7 @@ input[type=password]::-ms-clear
 	font-size: 14px;
 }
 .post-info h4 a:hover {
-	color: #f66962;
+	color: #a03593;
 }
 .post-info p {
 	color: #df5f5e;
@@ -6756,7 +6758,7 @@ input[type=password]::-ms-clear
 	color: #000;
 }
 .blog-title a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .blog-content p {
 	margin: 0 0 20px;
@@ -6793,7 +6795,7 @@ input[type=password]::-ms-clear
 	font-weight: 400;
 }
 .blog-info a:hover {
-	color: #F66962
+	color: #a03593
 }
 .entry-meta {
 	color: #26292c;
@@ -6904,7 +6906,7 @@ input[type=password]::-ms-clear
 	color: #22100D;
 }
 .blog-widget .post-info h4 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .blog-widget .post-info p {
 	color: #000000;
@@ -6930,10 +6932,10 @@ input[type=password]::-ms-clear
     font-weight: 500;
 }
 .category-widget .categories li a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .category-widget .categories > li > a > i {
-	color: #F66962;
+	color: #a03593;
 	font-size: 18px;
 	margin-right: 19px;
 }
@@ -7218,7 +7220,7 @@ input[type=password]::-ms-clear
 	color: #fff;
 }
 .student-group .course-name h4 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .student-group .course-name h4 span {
 	background: #fff;
@@ -7386,7 +7388,7 @@ input[type=password]::-ms-clear
 	border-bottom: 0;
 }
 .play-intro {
-	color: #F66962;
+	color: #a03593;
 }
 .lesson-percent {
 	border-bottom: 1px solid #E5E5E5;
@@ -7409,7 +7411,7 @@ input[type=password]::-ms-clear
     border-radius: 10px;
 }
 .lesson-introduction .tittle {
-	color: #F66962;
+	color: #a03593;
 	font-size: 24px;
 	font-weight: 500;
 	margin-bottom: 20px;
@@ -8097,10 +8099,10 @@ input[type=password]::-ms-clear
 	margin-right: 10px;
 }
 .add-compose .btn-primary {
-	color: #F66962;
+	color: #a03593;
 	font-size: 14px;
 	background: #FFFFFF;
-	border: 1px solid #F66962;
+	border: 1px solid #a03593;
 	border-radius: 50px;
 	padding: 13px 41px;
 }
@@ -8631,7 +8633,7 @@ input[type=password]::-ms-clear
 	font-weight: 600;
 }
 .profile-details .course-name h4 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .profile-details .course-name p {
 	color: #303030;
@@ -8680,7 +8682,7 @@ input[type=password]::-ms-clear
     border-bottom: 1px solid rgb(199 199 199 / 25%);
 }
 .personal-info-head p span {
-	color: #F66962;
+	color: #a03593;
 }
 .save-social .btn-primary {
 	min-width: 237px;
@@ -8960,7 +8962,7 @@ input[type=password]::-ms-clear
     color: #fff;
 }
 .instructor-profile-content h4 a:hover {
-	color: #F66962;
+	color: #a03593;
 }
 .instructor-profile-content h4 span {
     background: #fff;
@@ -9083,7 +9085,7 @@ input[type=password]::-ms-clear
     color: #000;
 }
 .instructor-grid .instructor-product-content h3 a:hover {
-    color: #F66962;
+    color: #a03593;
 }
 .instructor-grid .course-view {
     margin-left: 30px;
@@ -9209,7 +9211,7 @@ input[type=password]::-ms-clear
 .add-course-inner-header h4 {
     font-weight: 500;
     font-size: 24px;
-    color: #F66962;
+    color: #a03593;
     margin-bottom: 0;
 }
 .add-course-form {
@@ -9305,8 +9307,8 @@ input[type=password]::-ms-clear
 }
 .relative-file-upload {
     color: #fff;
-    background: #F66962;
-    border: 1px solid #F66962;
+    background: #a03593;
+    border: 1px solid #a03593;
     border-radius: 5px;
     padding: 8px 18px;
     font-size: 14px;
@@ -9473,7 +9475,7 @@ input[type=password]::-ms-clear
     margin-right: 8px;
 }
 .faq-right a:hover {
-    color: #F66962;
+    color: #a03593;
 }
 .faq-body {
     padding-top: 20px;
@@ -9730,17 +9732,17 @@ input[type=password]::-ms-clear
 		transform: translateY(0);
 	}
 	.main-nav .has-submenu.active > a {
-		color: #F66962;
+		color: #a03593;
 	}
 	.main-nav .has-submenu.active .submenu li.active > a {
-		color: #F66962;
+		color: #a03593;
 	}
 	.header-one .main-nav .has-submenu.active .submenu li.active > a,
 	.header-four .main-nav .has-submenu.active .submenu li.active > a {
 		color: #6255A4;
 	}
 	.header-two .main-nav .has-submenu.active .submenu li.active > a {
-		color: #F66962;
+		color: #a03593;
 	}
 	.header-five .main-nav .has-submenu.active .submenu li.active > a {
 		color: #296ED6;
@@ -9763,7 +9765,7 @@ input[type=password]::-ms-clear
 		margin-top: 10px;
 	}
 	.main-nav li .submenu a:hover {
-		color: #F66962;
+		color: #a03593;
 		letter-spacing: 0.5px;
 		padding-left: 20px;
 	}
@@ -10139,7 +10141,7 @@ input[type=password]::-ms-clear
 		z-index: 1060;
 		transform: translateX(-260px);
 		transition: all 0.4s;
-		background-color: #f66962;
+		background-color: #a03593;
 	}
 	.menu-header {
 		display: -webkit-box;
@@ -10869,7 +10871,7 @@ input[type=password]::-ms-clear
 		padding: 15px;
 	}
 	.bar-icon span {
-		background-color: #f66962;
+		background-color: #a03593;
 	}
 	.header-navbar-rht {
 		display: none;
@@ -11938,7 +11940,7 @@ input[type=password]::-ms-clear
 }
 .section-header span {
     display: block;
-    color: #F66962;
+    color: #a03593;
     font-weight: 600;
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -12039,7 +12041,7 @@ input[type=password]::-ms-clear
 }
 .team-member .social a {
     margin: 0 5px;
-    color: #F66962;
+    color: #a03593;
     transition: 0.3s;
     font-size: 16px;
 }
@@ -12050,7 +12052,7 @@ input[type=password]::-ms-clear
 /* STATISTICS COUNTER */
 .stats-counter h2 {
     font-size: 36px;
-    color: #F66962;
+    color: #a03593;
     font-weight: 700;
     margin-bottom: 10px;
 }
@@ -12082,7 +12084,7 @@ input[type=password]::-ms-clear
 .testimonial h5 {
     margin-top: 15px;
     font-weight: 600;
-    color: #F66962;
+    color: #a03593;
 }
 
 /* GALLERY */
@@ -12099,7 +12101,7 @@ input[type=password]::-ms-clear
 
 /* CTA SECTION */
 .cta-section {
-    background: #F66962;
+    background: #a03593;
     color: #fff;
     padding: 60px 0;
     text-align: center;
@@ -12115,7 +12117,7 @@ input[type=password]::-ms-clear
 }
 .cta-section a {
     background: #fff;
-    color: #F66962;
+    color: #a03593;
     font-weight: 600;
     padding: 15px 35px;
     border-radius: 50px;
