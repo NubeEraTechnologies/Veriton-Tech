@@ -264,15 +264,7 @@ Version      : 1.0
 	        }
 	    });
     }
-	
-	// Slick testimonial three
-
-	if($('.mentor-testimonial.lazy').length > 0) {
-		$(".mentor-testimonial.lazy").slick({
-			lazyLoad: 'ondemand',
-			infinite: true
-		});
-	}
+ 
 
 	// Home header
 
@@ -382,14 +374,7 @@ Version      : 1.0
 			}
 		});
 
-	// Fade in scroll
-
-	if($('.main-wrapper .aos').length>0){
-		AOS.init({
-			duration:1200,
-			once:true
-		});
-	}
+	 
 
 	// Content div min height set
 	
