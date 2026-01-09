@@ -2006,7 +2006,7 @@ html.menu-opened body {
 }
 .mentoring-course {
 	margin-top: 40px;
-}
+}	
 .owl-theme .owl-nav {
 	display: none;
 }
@@ -2076,7 +2076,7 @@ html.menu-opened body {
 	-webkit-backdrop-filter: blur(17px);
 }
 .product:hover {
-	background: #413655;
+	background: #a03593;
 	color: #fff;
 	transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -11908,4 +11908,270 @@ input[type=password]::-ms-clear
 		width: 100%;
 		margin-right: 0;
 	}
+
+	.feature-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/*-----------------
+	50. About Us Page
+-----------------------*/
+
+/* GENERAL */
+.section {
+    padding: 80px 0;
+    position: relative;
+}
+.bg-light {
+    background-color: #f9f9f9;
+}
+.section-header span {
+    display: block;
+    color: #F66962;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.section-header h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+.aos {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-in-out;
+}
+.aos.aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* WHO WE ARE */
+.who-we-are p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* MISSION, VISION & VALUES */
+.mission-vision h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.mission-vision p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* PROGRAM CARDS */
+.program-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.4s ease;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.program-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+.program-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+.program-card h4 {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.program-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* TEAM MEMBERS */
+.team-member {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.4s ease;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.team-member:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+.team-member img {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    transition: 0.4s;
+}
+.team-member img:hover {
+    transform: scale(1.05);
+}
+.team-member h4 {
+    margin-top: 15px;
+    font-weight: 700;
+}
+.team-member p {
+    font-size: 14px;
+    color: #666;
+}
+.team-member .social a {
+    margin: 0 5px;
+    color: #F66962;
+    transition: 0.3s;
+    font-size: 16px;
+}
+.team-member .social a:hover {
+    color: #FF5364;
+}
+
+/* STATISTICS COUNTER */
+.stats-counter h2 {
+    font-size: 36px;
+    color: #F66962;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.stats-counter p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* TESTIMONIALS */
+.testimonial {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.08);
+}
+.testimonial p {
+    font-size: 16px;
+    font-style: italic;
+    color: #333;
+}
+.testimonial h5 {
+    margin-top: 15px;
+    font-weight: 600;
+    color: #F66962;
+}
+
+/* GALLERY */
+.gallery img {
+    border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* CTA SECTION */
+.cta-section {
+    background: #F66962;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+.cta-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.cta-section p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+.cta-section a {
+    background: #fff;
+    color: #F66962;
+    font-weight: 600;
+    padding: 15px 35px;
+    border-radius: 50px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+.cta-section a:hover {
+    background: #FF5364;
+    color: #fff;
+}
+
+/* ANIMATIONS */
+.fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-in-out;
+}
+.fade-up.aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fade-left {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease-in-out;
+}
+.fade-left.aos-animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+.fade-right {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s ease-in-out;
+}
+.fade-right.aos-animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .section-header h2, .student-course h2 {
+        font-size: 28px;
+    }
+    .team-member h4 {
+        font-size: 18px;
+    }
+    .program-card h4 {
+        font-size: 18px;
+    }
+}
+@media (max-width: 576px) {
+    .section {
+        padding: 50px 0;
+    }
+}
+
 }
