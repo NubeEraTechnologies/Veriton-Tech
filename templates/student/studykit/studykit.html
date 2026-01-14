@@ -1,12 +1,14 @@
 {% extends 'student/studentbase.html' %} {% block content %} {% load static %}
 <link rel="stylesheet" href="/static/get/css/style.css" />
+
 <style>
-  ol.breadcrumb li + li:before {
+  ol.breadcrumb li+li:before {
     content: "\f061";
     display: inline-block;
     font-family: "fontAwesome";
     padding: 0 10px;
   }
+
   /* .question-item h5 {
     font-size: 32px; 
   }
@@ -19,29 +21,147 @@
 
 
 
-.video-js video {
-  width: 100% ;
-  height: 100%;
-  object-fit: contain; /* use 'cover' if you want full crop */
-}
+  .video-js video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* use 'cover' if you want full crop */
+  }
 
-#media-wrapper {
+  #media-wrapper {
+    width: 100%;
+  }
+
+  #video-container {
+    width: 100%;
+    height: 500px;
+  }
+
+  .video-js {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Style the Image Used to Trigger the Modal */
+  img {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  img:hover {
+    opacity: 0.7;
+  }
+
+  /* Keep diagram inside card */
+.diagram-wrapper {
   width: 100%;
+  overflow: hidden; /* prevents breaking card */
 }
 
-#video-container {
-  width: 100%;
-  height: 500px;
+/* Responsive diagram image */
+.diagram-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
-.video-js {
-  width: 100% ;
-  height: 100% ;
-}
 
+  /* The Modal (background) */
+  #image-viewer {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+  }
 
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    cursor: grab;
+    transition: transform 0.15s ease-out;
+  }
+
+  .modal-content {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+
+  @keyframes zoom {
+    from {
+      transform: scale(0)
+    }
+
+    to {
+      transform: scale(1)
+    }
+  }
+
+  #image-viewer .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  #image-viewer .modal-content:active {
+    cursor: grabbing;
+  }
+
+  #image-viewer .close:hover,
+  #image-viewer .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .modal-content {
+      width: 100%;
+    }
+  }
+
+  .zoom-controls {
+    position: fixed;
+    top: 120px;
+    /* below header */
+    right: 40px;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .zoom-controls button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .zoom-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Video.js CSS -->
 <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
@@ -59,42 +179,42 @@
 </div> -->
 
 {% if messages %}
-    {% for message in messages %}
-        <!-- Bootstrap Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{ message }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
+{% for message in messages %}
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered class -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">January 2026 Boot Camp @ NubeEra </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
 {% endif %}
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Show the modal when the DOM is ready
-        var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
-            keyboard: false
-        });
-
-        // Show the modal
-        successModal.show();
-
-        // Hide the modal after 5 seconds
-        setTimeout(function() {
-            successModal.hide();
-        }, 3000);
+  document.addEventListener("DOMContentLoaded", function () {
+    // Show the modal when the DOM is ready
+    var successModal = new bootstrap.Modal(document.getElementById('successModal'), {
+      keyboard: false
     });
+
+    // Show the modal
+    successModal.show();
+
+    // Hide the modal after 5 seconds
+    setTimeout(function () {
+      successModal.hide();
+    }, 3000);
+  });
 </script>
 
 <div class="container-fluid">
@@ -103,153 +223,66 @@
       <div class="card">
         <div id="lesson-details" class="card-body">
           <div id="video-container" style="display:none;">
-              <video
-                id="lessonVideo"
-                class="video-js vjs-default-skin"
-                controls
-                preload="auto"
-                oncontextmenu="return false;"
-                data-setup="{}">
-                Your browser does not support HTML5 video.
-              </video>
-            </div>
+            <video id="lessonVideo" class="video-js vjs-default-skin" controls preload="auto"
+              oncontextmenu="return false;" data-setup="{}">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
 
 
 
-          <img
-            id="video-placeholder"
-            src="/static/image/girls_working.jpeg"
-            alt="Video Placeholder"
-            style="width: 100%; cursor: pointer"
-          />
+          <img id="video-placeholder" src="/static/image/girls_working.jpeg" alt="Video Placeholder"
+            style="width: 100%; cursor: pointer" />
 
           <!-- Tabs for displaying content -->
           <div class="course-details-tab style-2 mt-4">
             <nav>
               <div class="nav nav-tabs tab-auto" id="nav-tab" role="tablist">
-                <button
-                  class="nav-link active"
-                  id="nav-about-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-about"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-about"
-                  aria-selected="true"
-                >
+                <button class="nav-link active" id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
+                  type="button" role="tab" aria-controls="nav-about" aria-selected="true">
                   About
                 </button>
-                <button
-                  class="nav-link"
-                  id="nav-reqmaterial-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-reqmaterial"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-reqmaterial"
-                  aria-selected="false"
-                >
+                <button class="nav-link" id="nav-reqmaterial-tab" data-bs-toggle="tab" data-bs-target="#nav-reqmaterial"
+                  type="button" role="tab" aria-controls="nav-reqmaterial" aria-selected="false">
                   Required Material
                 </button>
-                <button
-                  class="nav-link"
-                  id="nav-digram-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-digram"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-digram"
-                  aria-selected="false"
-                >
+                <button class="nav-link" id="nav-digram-tab" data-bs-toggle="tab" data-bs-target="#nav-digram"
+                  type="button" role="tab" aria-controls="nav-digram" aria-selected="false">
                   Circuit Diagram
                 </button>
-                <button
-                  class="nav-link"
-                  id="nav-code-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-code"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-code"
-                  aria-selected="false"
-                >
+                <button class="nav-link" id="nav-code-tab" data-bs-toggle="tab" data-bs-target="#nav-code" type="button"
+                  role="tab" aria-controls="nav-code" aria-selected="false">
                   Code
                 </button>
-                <button
-                  class="nav-link"
-                  id="nav-process-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-process"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-process"
-                  aria-selected="false"
-                >
+                <button class="nav-link" id="nav-process-tab" data-bs-toggle="tab" data-bs-target="#nav-process"
+                  type="button" role="tab" aria-controls="nav-process" aria-selected="false">
                   Procedure
                 </button>
-                <button
-                  class="nav-link"
-                  id="nav-get-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-get"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-get"
-                  aria-selected="false"
-                >
+                <button class="nav-link" id="nav-get-tab" data-bs-toggle="tab" data-bs-target="#nav-get" type="button"
+                  role="tab" aria-controls="nav-get" aria-selected="false">
                   What You Get
                 </button>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="nav-about"
-                role="tabpanel"
-                aria-labelledby="nav-about-tab"
-              >
+              <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                 <div class="about-content">
                   Select a lesson to view details.
                 </div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="nav-reqmaterial"
-                role="tabpanel"
-                aria-labelledby="nav-reqmaterial-tab"
-              >
+              <div class="tab-pane fade" id="nav-reqmaterial" role="tabpanel" aria-labelledby="nav-reqmaterial-tab">
                 Required Material content will appear here.
               </div>
-              <div
-                class="tab-pane fade"
-                id="nav-digram"
-                role="tabpanel"
-                aria-labelledby="nav-digram-tab"
-              >
+              <div class="tab-pane fade" id="nav-digram" role="tabpanel" aria-labelledby="nav-digram-tab">
                 Circuit Diagram content will appear here.
               </div>
-              <div
-                class="tab-pane fade"
-                id="nav-code"
-                role="tabpanel"
-                aria-labelledby="nav-code-tab"
-              >
+              <div class="tab-pane fade" id="nav-code" role="tabpanel" aria-labelledby="nav-code-tab">
                 Code content will appear here.
               </div>
-              <div
-                class="tab-pane fade"
-                id="nav-process"
-                role="tabpanel"
-                aria-labelledby="nav-process-tab"
-              >
+              <div class="tab-pane fade" id="nav-process" role="tabpanel" aria-labelledby="nav-process-tab">
                 Procedure content will appear here.
               </div>
-              <div
-                class="tab-pane fade"
-                id="nav-get"
-                role="tabpanel"
-                aria-labelledby="nav-get-tab"
-              >
+              <div class="tab-pane fade" id="nav-get" role="tabpanel" aria-labelledby="nav-get-tab">
                 What You Get content will appear here.
               </div>
             </div>
@@ -270,24 +303,15 @@
         {% for module_name, lessons in grouped_lessons.items %}
         <div class="accordion-item card">
           <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-            <button
-              class="accordion-button d-flex justify-content-between align-items-center collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapse{{ forloop.counter }}"
-              aria-expanded="true"
-              aria-controls="collapse{{ forloop.counter }}"
-            >
+            <button class="accordion-button d-flex justify-content-between align-items-center collapsed" type="button"
+              data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true"
+              aria-controls="collapse{{ forloop.counter }}">
               <span class="acc-heading">{{ module_name }}</span>
               <span class="ms-auto">Total Lessons : ({{ lessons|length }})</span>
             </button>
           </h2>
-          <div
-            id="collapse{{ forloop.counter }}"
-            class="accordion-collapse collapse"
-            aria-labelledby="heading{{ forloop.counter }}"
-            data-bs-parent="#accordionExample"
-          >
+          <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
+            aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
             <div class="accordion-body card-body pt-0">
               {% for lesson in lessons %}
               <div class="acc-courses">
@@ -296,63 +320,62 @@
                     <span class="acc-icon">
                       {% if lesson.watched_status_display == 'YES' %}
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 13C3.817 13 3.635 12.95 3.474 12.851C3.32918 12.7611 3.20965 12.6358 3.12671 12.4869C3.04378 12.338 3.00016 12.1704 3 12V4C3 3.653 3.18 3.331 3.474 3.149C3.61914 3.05976 3.7846 3.00891 3.95481 3.00121C4.12502 2.99351 4.29439 3.02923 4.447 3.105L12.447 7.105C12.6131 7.1882 12.7528 7.31599 12.8504 7.47405C12.948 7.63212 12.9997 7.81423 12.9997 8C12.9997 8.18578 12.948 8.36789 12.8504 8.52595C12.7528 8.68402 12.6131 8.8118 12.447 8.895L4.447 12.895C4.307 12.965 4.152 13 4 13Z" fill="var(--primary)"></path>
+                        <path
+                          d="M4 13C3.817 13 3.635 12.95 3.474 12.851C3.32918 12.7611 3.20965 12.6358 3.12671 12.4869C3.04378 12.338 3.00016 12.1704 3 12V4C3 3.653 3.18 3.331 3.474 3.149C3.61914 3.05976 3.7846 3.00891 3.95481 3.00121C4.12502 2.99351 4.29439 3.02923 4.447 3.105L12.447 7.105C12.6131 7.1882 12.7528 7.31599 12.8504 7.47405C12.948 7.63212 12.9997 7.81423 12.9997 8C12.9997 8.18578 12.948 8.36789 12.8504 8.52595C12.7528 8.68402 12.6131 8.8118 12.447 8.895L4.447 12.895C4.307 12.965 4.152 13 4 13Z"
+                          fill="var(--primary)"></path>
                       </svg>
-                    </span>	
-                    <h4
-                    class="m-0 lesson-heading"
-                  data-lesson-id="{{ lesson.id }}"
-                  >
-                  {% else %}
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.3337 6V4.66666C11.3337 2.79999 9.86699 1.33333 8.00033 1.33333C6.13366 1.33333 4.66699 2.79999 4.66699 4.66666V6C3.53366 6 2.66699 6.86666 2.66699 8V12.6667C2.66699 13.8 3.53366 14.6667 4.66699 14.6667H11.3337C12.467 14.6667 13.3337 13.8 13.3337 12.6667V8C13.3337 6.86666 12.467 6 11.3337 6ZM6.00033 4.66666C6.00033 3.53333 6.86699 2.66666 8.00033 2.66666C9.13366 2.66666 10.0003 3.53333 10.0003 4.66666V6H6.00033V4.66666ZM8.66699 11.3333C8.66699 11.7333 8.40033 12 8.00033 12C7.60033 12 7.33366 11.7333 7.33366 11.3333V9.33333C7.33366 8.93333 7.60033 8.66666 8.00033 8.66666C8.40033 8.66666 8.66699 8.93333 8.66699 9.33333V11.3333Z" fill="#374557"></path>
-                  </svg>
-                  </span>	
-                  <h4 class="m-4">
-                  {% endif %}
-                  
-                  {{ lesson.heading }}  </h4>
+                    </span>
+                    <h4 class="m-0 lesson-heading" data-lesson-id="{{ lesson.id }}">
+                      {% else %}
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M11.3337 6V4.66666C11.3337 2.79999 9.86699 1.33333 8.00033 1.33333C6.13366 1.33333 4.66699 2.79999 4.66699 4.66666V6C3.53366 6 2.66699 6.86666 2.66699 8V12.6667C2.66699 13.8 3.53366 14.6667 4.66699 14.6667H11.3337C12.467 14.6667 13.3337 13.8 13.3337 12.6667V8C13.3337 6.86666 12.467 6 11.3337 6ZM6.00033 4.66666C6.00033 3.53333 6.86699 2.66666 8.00033 2.66666C9.13366 2.66666 10.0003 3.53333 10.0003 4.66666V6H6.00033V4.66666ZM8.66699 11.3333C8.66699 11.7333 8.40033 12 8.00033 12C7.60033 12 7.33366 11.7333 7.33366 11.3333V9.33333C7.33366 8.93333 7.60033 8.66666 8.00033 8.66666C8.40033 8.66666 8.66699 8.93333 8.66699 9.33333V11.3333Z"
+                          fill="#374557"></path>
+                      </svg>
+                      </span>
+                      <h4 class="m-4">
+                        {% endif %}
 
-                  
-                  </div>	
+                        {{ lesson.heading }} </h4>
+
+
+                  </div>
                   <span> (Mints {{ lesson.mints }}) </span>
                 </div>
               </div>
               {% endfor %}
 
               <!-- Separate heading for Exam availability -->
-              {% with last_lesson=lessons|last %} 
+              {% with last_lesson=lessons|last %}
               {% if last_lesson.has_ques and last_lesson.watched_status_display == 'YES' %}
 
               <div class="acc-courses">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="d-flex align-items-center">
                     <span class="acc-icon">
-                      
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="2" width="12" height="12" fill="white" stroke="var(--primary)" stroke-width="1"/>
-                        <line x1="3" y1="4" x2="13" y2="4" stroke="var(--primary)" stroke-width="0.5"/>
-                        <line x1="3" y1="6" x2="13" y2="6" stroke="var(--primary)" stroke-width="0.5"/>
-                        <line x1="3" y1="8" x2="13" y2="8" stroke="var(--primary)" stroke-width="0.5"/>
-                        <line x1="3" y1="10" x2="13" y2="10" stroke="var(--primary)" stroke-width="0.5"/>
-                        <line x1="3" y1="12" x2="8" y2="12" stroke="var(--primary)" stroke-width="0.5"/>
-                        
-                        <path d="M10 1L11.5 2.5L5 9L4 10.5L3.5 11.5L3 11L2 10L8.5 3.5L10 1Z" fill="var(--primary)"/>
-                      </svg>
-                      
-                    </span>	
-                    <h4
-                    class="m-0 lesson-heading exam-heading"
-                    data-lesson-id="{{ last_lesson.id }}"
-                  >
-                  
-                  Exam</h4>
 
-                  
-                  </div>	
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="12" height="12" fill="white" stroke="var(--primary)"
+                          stroke-width="1" />
+                        <line x1="3" y1="4" x2="13" y2="4" stroke="var(--primary)" stroke-width="0.5" />
+                        <line x1="3" y1="6" x2="13" y2="6" stroke="var(--primary)" stroke-width="0.5" />
+                        <line x1="3" y1="8" x2="13" y2="8" stroke="var(--primary)" stroke-width="0.5" />
+                        <line x1="3" y1="10" x2="13" y2="10" stroke="var(--primary)" stroke-width="0.5" />
+                        <line x1="3" y1="12" x2="8" y2="12" stroke="var(--primary)" stroke-width="0.5" />
+
+                        <path d="M10 1L11.5 2.5L5 9L4 10.5L3.5 11.5L3 11L2 10L8.5 3.5L10 1Z" fill="var(--primary)" />
+                      </svg>
+
+                    </span>
+                    <h4 class="m-0 lesson-heading exam-heading" data-lesson-id="{{ last_lesson.id }}">
+
+                      Exam</h4>
+
+
+                  </div>
                 </div>
               </div>
-              
+
               {% endif %} {% endwith %}
             </div>
           </div>
@@ -362,19 +385,27 @@
     </div>
   </div>
 </div>
+<div id="image-viewer">
+  <div class="zoom-controls">
+    <button id="zoom-in">+</button>
+    <button id="zoom-out">−</button>
+  </div>
+  <span class="close">&times;</span>
+  <img class="modal-content" id="full-image">
 
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  
+
   $(document).ready(function () {
-       videoPlayer = videojs("lessonVideo", {
-        controls: true,
-        preload: "auto",
-        fluid: false
-      });
-      $(document).on("contextmenu", ".video-js", function (e) {
-        e.preventDefault();
-      });
+    videoPlayer = videojs("lessonVideo", {
+      controls: true,
+      preload: "auto",
+      fluid: false
+    });
+    $(document).on("contextmenu", ".video-js", function (e) {
+      e.preventDefault();
+    });
     videoPlayer.controlBar.removeChild("PictureInPictureToggle");
     // Handle lesson heading click
     $(".lesson-heading").on("click", function () {
@@ -392,7 +423,11 @@
           // Populate the card-body with the fetched lesson details
           $("#nav-about .about-content").html(data.about);
           $("#nav-reqmaterial").html(data.reqmaterial);
-          $("#nav-digram").html('<img src="' + data.digram + '" height = 1200  alt="digram">');
+          $("#nav-digram").html(
+            '<div class="images diagram-wrapper">' +
+            '<img src="' + data.digram + '" class="diagram-image" alt="diagram">' +
+            '</div>'
+          );
           $("#nav-code").html(data.code);
           $("#nav-process").html(data.process);
           $("#nav-get").html(data.get);
@@ -416,9 +451,8 @@
             });
 
             videoPlayer.load();
-          } 
-          else 
-          {
+          }
+          else {
             videoPlayer.pause();
             videoPlayer.currentTime(0);
 
@@ -485,14 +519,11 @@
             const checked = selectedAnswers[index] == idx + 1 ? "checked" : "";
             return `
           <div class="form-check">
-            <input class="form-check-input" type="radio" id="option${
-              idx + 1
-            }_question${index}" name="question${index}" value="${
-              idx + 1
-            }" ${checked}>
-            <label class="form-check-label" for="option${
-              idx + 1
-            }_question${index}">${option}</label>
+            <input class="form-check-input" type="radio" id="option${idx + 1
+              }_question${index}" name="question${index}" value="${idx + 1
+              }" ${checked}>
+            <label class="form-check-label" for="option${idx + 1
+              }_question${index}">${option}</label>
           </div>
         `;
           })
@@ -508,16 +539,14 @@
         // Navigation buttons with Bootstrap styles
         const navigationButtons = `
       <div class="navigation-buttons mt-3">
-        ${
-          index > 0
+        ${index > 0
             ? '<button id="prevBtn" class="btn btn-secondary me-2">Previous</button>'
             : ""
-        }
-        ${
-          index < questions.length - 1
+          }
+        ${index < questions.length - 1
             ? '<button id="nextBtn" class="btn btn-primary">Next</button>'
             : '<button id="submitBtn" class="btn btn-success">Submit</button>'
-        }
+          }
       </div>
     `;
         questionsContainer.append(navigationButtons);
@@ -663,4 +692,93 @@
     }
   });
 </script>
+<script>
+  let scale = 1;
+  let isDragging = false;
+  let startX, startY, translateX = 0, translateY = 0;
+  const MIN_SCALE = 1;
+  const MAX_SCALE = 4;
+
+  function applyTransform() {
+    $("#full-image").css(
+      "transform",
+      `translate(${translateX}px, ${translateY}px) scale(${scale})`
+    );
+  }
+
+  function resetTransform() {
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+    applyTransform();
+  }
+
+  /* Open modal */
+  $(document).on("click", ".images img", function () {
+    $("#full-image").attr("src", $(this).attr("src"));
+    resetTransform();
+    $("#image-viewer").fadeIn(200);
+  });
+
+  /* Close */
+  $(document).on("click", "#image-viewer .close", function () {
+    $("#image-viewer").fadeOut(200);
+  });
+
+  /* ESC */
+  $(document).on("keydown", function (e) {
+    if (e.key === "Escape") {
+      $("#image-viewer").fadeOut(200);
+    }
+  });
+
+  /* Outside click */
+  $("#image-viewer").on("click", function (e) {
+    if (e.target.id === "image-viewer") {
+      $("#image-viewer").fadeOut(200);
+    }
+  });
+
+  /* Mouse wheel zoom */
+  $("#full-image").on("wheel", function (e) {
+    e.preventDefault();
+    scale += e.originalEvent.deltaY * -0.001;
+    scale = Math.min(Math.max(MIN_SCALE, scale), MAX_SCALE);
+    applyTransform();
+  });
+
+  /* Button zoom in */
+  $("#zoom-in").on("click", function () {
+    scale = Math.min(scale + 0.2, MAX_SCALE);
+    applyTransform();
+  });
+
+  /* Button zoom out */
+  $("#zoom-out").on("click", function () {
+    scale = Math.max(scale - 0.2, MIN_SCALE);
+    applyTransform();
+  });
+
+  /* Pan */
+  $("#full-image").on("mousedown", function (e) {
+    if (scale <= 1) return;
+    isDragging = true;
+    startX = e.pageX - translateX;
+    startY = e.pageY - translateY;
+  });
+
+  $(document).on("mousemove", function (e) {
+    if (!isDragging) return;
+    translateX = e.pageX - startX;
+    translateY = e.pageY - startY;
+    applyTransform();
+  });
+
+  $(document).on("mouseup", function () {
+    isDragging = false;
+  });
+</script>
+
+
+
 {% endblock %}
